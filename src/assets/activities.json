@@ -1,0 +1,218 @@
+[{ 
+	"id" : 1,
+	"activetype" : "startup",
+	"current": false,
+	"name" : "TempoIQ",
+	"companyurl":"http://www.tempoiq.com",
+	"crunchbaseurl":"https://www.crunchbase.com/organization/tempo",
+	"logo" : "https://www.tempoiq.com/static/img/tempo-small.svg",
+	"logoheight" : 40,
+	"logowidth" : 192,
+	"description" : "TempoIQ is a Chicago Based company doing realtime time series alerting and analytics for the Internet of Things.  Divergent made an investment in 2013 and Todd served on the board of directors.   TempoIQ was sold to Avant in early 2015."
+	
+},
+{
+	"id": 2,
+	"activetype" : "startup",
+	"name": "ReadyPulse",
+	"current": false,
+	"companyurl":"http://www.readypulse.com",
+	"crunchbaseurl":"https://www.crunchbase.com/organization/readypulse",
+	"logoheight": 40,
+	"logowidth" : 192,
+	"logo" : "http://ww2.readypulse.com/wp-content/themes/readypulse/images/RP_Logo.svg",
+	"description" : 'ReadyPulse provides marketers tools for demonstrating social proof at scale.  ReadyPulse enables brands to cultivate brand ambasadors and find the most effective, authentic, and verified social proof to integrate into marketing.  Readypulse was sold to <a href="http://www.experticity.com">Experticity in 2015</a>'
+},
+{
+	"id": 3,
+	"activetype" : "startup",
+	"name": "BlueTalon",
+	"current": true,
+	"companyurl":"http://www.bluetalon.com",
+	"crunchbaseurl":"https://www.crunchbase.com/organization/bluetalon",
+	"logoheight": 40,
+	"logowidth" : 192,
+	"logo" : "http://bluetalon.com/wp-content/uploads/2014/11/BlueTalon-Logo-Small.png",
+	"description" : "BlueTalon, a bay area company, provides a policy engine to help customers safeguard Hadoop data.  The BlueTalon policy engine provisions and enforces your data access policies and provides controls on even the most sensitive data.  Todd serves as a board observer."
+
+},
+{
+	"id": 4,
+	"activetype":"nonprofit",
+	"name" :"Ashesi University",
+	"orgurl" :"http://www.ashesi.org",
+	"logo" : "http://ashesi.org/wp-content/uploads/2013/11/logo-header-2.jpg",
+	"logoheight": 60,
+	"logowidth" : 240,
+    "description" : "The Ashesi University Foundation supports Ashesi University College in Ghana.  Ashesi is a four year institution of higher education focused on fostering leadership, ethics, and critical thinking to educate the next generation of African Leaders.  It has a residential campus in Berekuso outside Accra, Ghana.",
+    "impact" : "Ashesi currently has 600 students from more than 18 African countries in the Majors of Computer Science, Business, and MIS.  In Fall 2015 Ashesi will add an Engineering program focuses on Mechanical, Electrical, and Computer Engineering.  Ashesi has produced more than 600 graduates.  Most are making a tremendous impact across their home continent.",
+    "toddrole" : "Ashesi provides leveraged impact to tackle the African continents most pressing problems with locally grown leaders and solutions.  Todd has been involved with Ashesi since reviewing Microsoft colleague Patrick Awuah's business plan.   Todd currently serves as chair of the foundation and has been on the board for more than 10 years.  In 2014, Todd lived on campus for the Fall Semester and taught in computer science and business."
+
+},
+{
+	"id": 5,
+	"activetype":"nonprofit",
+	"name" :"VentureWell",
+	"orgurl" :"http://www.venturewell.org",
+	"logo" : "http://venturewell.org/wp-content/themes/VentureWell/library/img/logo.png",
+	"logoheight": 40,
+	"logowidth" : 192,
+    "description" : "VentureWell is a higher education network that cultivates revolutionary ideas and promising inventions. For nearly twenty years, venturewell has been on a mission to launch new ventures from an emerging generation of young inventors driven to improve life for people and the planet.  VentureWell focuses on student inventors, making grants and providing training to faculty and students",
+    "impact" : "VentureWell has spawned more than 600 new courses and programs across 160 campuses to transform eduction in science, engineering and business.  Through it's work, VentureWell has impacted thousands of students and student and faculty formed companies.",
+    "toddrole" : "VentureWell fits Todd's model of leveraged impact through higher education and innovation.  Todd has been on the board of VentureWell since 2010, and currently serves on it's nominating committee as well as the boards secretary. He's proud to be associated with an organization that lives up to their motto of ideas to impact."
+
+	},
+{
+	"id":6,
+	"activetype":"course",
+	"logo":"http://fcei.northwestern.edu/images/nuvention/web-logos/NUvention-web-logo.jpg",
+	"logoheight": 80,
+	"logowidth" : 400,
+	"name":"NUvention Web and Media",
+	"organization":"Farley Center for Entrepreneurship and Innovation at Northwestern",
+	"orgurl" : "http://fcei.northwestern.edu/",
+	"when" : "Winter and Spring since 2010",
+	"description":"NUvention Web is a two quarter course that combines Northwestern graduate and undergraduate students from the McCormick School of Enginering, Kellogg School of Business, the Medill School of Journalism, as well as Northwestern's other schools to design, plan and run web based businesses.  The course has been recognized by Inc. Magazine and Venturebeat as one of the best Entrepreneurship courses in the country.   Student teams have had their work recognized in TechCrunch, PCMag, Rolling Stone and GigaOM as well as gone on to prominent accelerators around the country. More than 300 students have gone through the program to date.   Todd teachs the course with Michael Marasco and a number of other talented Northwestern faculty and alum entrepreneurs.  He also chairs coordination of its industry advisory board.",
+	"infourl" :{"link": "http://fcei.northwestern.edu/curriculum/nuvention/web.html","description":"Farley Center Page for NUvention Web + Media"}
+},
+{
+	"id":7,
+	"activetype":"course",
+	"name":"Entrepreneurship at Ashesi University",
+	"organization":"Ashesi Univeristy department of business",
+	"orgurl" : "http://www.ashesi.edu.gh/academics/business-administration.html",
+	"when" : "Fall 2014",
+	"description":"Todd co-taught the first semester of the year long Entrepreneurship capstone at Asehsi University with Dr. Sena Ageypong in the fall of 2014.  Todd and Sena adapted the Lean LaunchPad curriculum to Ashesi and West Africa.  50+ students in 10 teams develped businesses across a wide variety of areas in the Ghanian Market.  The course is the subject of a paper presented at VentureWell Open 2015.",
+	"infourl" :{"link": "http://www.toddwarreninc.com/blog/2014/11/16/teaching-entrepreneurship-at-ashesi/","description":"My blog post"}
+},
+{
+	"id":8,
+	"activetype":"course",
+	"name":"Software Engineering at Ashesi University",
+	"organization":"Ashesi Univeristy department of Computer Science",
+	"orgurl" : "http://www.ashesi.edu.gh/academics/computer-science.html",
+	"when" : "Fall 2014",
+	"description":"This one semester software engineering course, modeled on NUvention Web and Software Engineering at Northwestern, focused on personal and team software design using agile techniques in JavaScript and AngularJS.   The class extensively used modern techniques and tools including GitHub to help students solve real problems with real users quickly.",
+	"infourl" :{"link":"http://www.toddwarreninc.com/blog/2014/10/03/a-new-course-in-software-engineering-at-ashesi-university/","description":"My blog post"}
+},
+{
+	"id":9,
+	"activetype":"course",
+	"name":"EECS 395 Building Software Products",
+	"organization":"Northwestern University Department of Electrial Engineering and Computer Science",
+	"orgurl" : "http://eecs.northwestern.edu/",
+	"when" : "Spring 2009",
+	"description":"A one quarter course focused on software development and software project management as it applies to software products.  Teams learned the basics of developing a vision for a software product, how to research user needs using contextual design, wrote detailed functional specifications, and agile development methodology.  Students developed applications for Facebook in .Net",
+	"infourl" :{"link": "","description":""}
+},
+{
+	"id":10,
+	"activetype":"course",
+	"name":"EECS 394 Software Engineering",
+	"organization":"Northwestern University Department of Computer Science",
+	"orgurl" : "http://eecs.northwestern.edu/",
+	"when" : "Spring 2001",
+	"description":"A one quarter course with more than 60 students focused on software development and software project management.  Teams learned the basics of developing a vision for a software product, how to research user needs using contextual design, wrote detailed functional specifications, and experimented with the then new eXtreme Programing methodology.  Todd's first experience teaching at Northwestern.",
+	"infourl" :{"link": "","description":""}
+},
+{
+	"id":11,
+	"activetype":"nu",
+	"name":"EECS Advisory Board",
+	"organization":"Northwestern University Department of Computer Science",
+	"orgurl" : "http://eecs.northwestern.edu/",
+	"when" : "2006 to Present",
+	"description":"Advisory board for the department of Electrical Engineering and Computer Science",
+	"infourl" :{"link": "","description":""}
+},
+{
+	"id":12,
+	"activetype":"nu",
+	"name":"McCormick Advisory Council",
+	"organization":"Northwestern University McCormick School of Engineering",
+	"orgurl" : "http://mccormick.northwestern.edu/",
+	"when" : "2012 to present",
+	"description":"Advisory board to the Northewestern Engineering School",
+	"infourl" :{"link": "","description":""}
+},
+{
+	"id":13,
+	"activetype":"nu",
+	"name":"Farley Center for Entrepreneurship Advisory Board",
+	"organization":"Northwestern University Farley Center for Entrepreneurship",
+	"orgurl" : "http://fcei.northwestern.edu/",
+	"when" : "2009 to Present",
+	"description":"Advises the center for Entrepreneurship on curriculum, community engagement, and co-curricular activities.",
+	"infourl" :{"link": "","description":""}
+},
+{
+	"id":14,
+	"activetype":"nu",
+	"name":"School of Communication National Advisory Board",
+	"organization":"Northwestern University School of Communication",
+	"orgurl" : "http://eecs.northwestern.edu/",
+	"when" : "2001 to Present",
+	"description":"Advise School of Communciation on curriculum, co-curricular activities, industry trends and provide development assistance.  Served as chair from 2010-2014.",
+	"infourl" :{"link": "","description":""}
+},
+{
+	"id": 15,
+	"activetype" : "angel",
+	"name": "HappyBits",
+	"companyurl":"http://happybits.co",
+	"crunchbaseurl":"",
+	"angellisturl":"https://angel.co/happybits",
+	"logoheight": 40,
+	"logowidth" : 40,
+	"logo" : "http://happybits.co/img/happybits.png",
+	"description" : "HappyBits provides engaging add-ins to messaging platforms that enable users to better connect with friends",
+	"toddrole" :"One of the founders was a student in Todd's 2001 class at Northwestern. I serve as an informal advisor, and learn way more than I give from these talented founders whose products are on a viral tear."
+},
+{
+	"id": 16,
+	"activetype" : "angel",
+	"name": "GiveForward",
+	"companyurl":"http://giveforward.com",
+	"crunchbaseurl":"https://www.crunchbase.com/organization/giveforward",
+	"angellisturl":"https://angel.co/giveforward",
+	"logoheight": 34,
+	"logowidth" : 150,
+	"logo" : "http://assets.giveforward.com/asset/api/production/stimpy/gf-logo-94cfa9ac54ef2987e716cf9a7da6bf22.png",
+	"description" : "GiveForward provides crowdfunding services to help support friends and family with medical bills and emergency expenses.",
+	"toddrole" :"I met the terrific founding team of Desiree and Ethan through a Northwestern colleague after they completed Chicago Excelerate (Now Techstars Chicago) in 2009.  GiveForward is a great example of how to build a strong positive culture that reflects your brand identity."
+},
+{
+	"id": 17,
+	"activetype" : "angel",
+	"name": "GrooveBug",
+	"companyurl":"http://groovebug.com",
+	"crunchbaseurl":"https://www.crunchbase.com/organization/groovebug",
+	"angellisturl":"https://angel.co/groovebug",
+	"logoheight": 34,
+	"logowidth" : 150,
+	"logo" : "http://groovebug.com/wp-content/uploads/2013/07/gb_white1.png",
+	"description" : "Groovebug was founded by students who took my NUvention Web Class in 2010.  It provides a platform that enables highly interactive, engaging music magazines or electronic box sets.   Groovebug powers applications from BlueNote, Deutsche Gramaphone, and Wolfgang's Vault.",
+	"toddrole" :"I taught this team in 2010, and made an investment in 2011.  I currently serve on Groovebug's board of directors."
+},
+{
+"id": 18,
+	"activetype" : "angel",
+	"name": "BigTime Software",
+	"companyurl":"http://bigtime.net",
+	"logoheight": 34,
+	"logowidth" : 150,
+	"logo" : "http://www.bigtime.net/wp-content/uploads/logo-bigtime.png",
+	"description" : "BigTime software provides time and billing as a service.  ",
+	"toddrole" : "Todd connected thorugh a colleague at Northwestern, and has served as an informal advisor on business and architecture strategy."
+},
+{
+	"activetype" : "angel",
+	"name": "TimeBox",
+	"companyurl":"http://www.timeboxapp.com",
+	"logoheight": 34,
+	"logowidth" : 150,
+	"logo" : "http://static1.squarespace.com/static/521e43b2e4b073e6033231c8/t/522fb2d7e4b08c58ebe75d5b/1428011908485/?format=1500w",
+	"description" : "Timebox provides an application to help you build stories of your life based on your photographs and memories.  It automatically organizes your photos from your cloud storage to bring your stories to life.",
+	"toddrole" : "Todd worked with Len Kawell, the very talented founder of timebox at Microsoft."
+}
+]

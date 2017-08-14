@@ -1,0 +1,8 @@
+.toolbar-button-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.content-area {
+    background: #607D8B
+}

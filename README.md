@@ -8,7 +8,7 @@ It is also an example of using github to create and manage a project.   Many of 
 
 Those aspects of development are explained in this projects [wiki]()
 
-# 3 Panel Scenario
+# 4 Panel Scenario
 Developing an MVP starts with defining a storyboard or scenario for the products main set of value.  The 3 panel for this application is [here]().  
 
 In summary it is the following:
