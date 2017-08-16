@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MdToolbarModule, MdSidenavModule, MdCardModule, MdButtonModule, MdListModule } from '@angular/material';
+import { MdToolbarModule, MdSidenavModule, MdCardModule, MdButtonModule, MdListModule, MdGridListModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
@@ -11,6 +11,7 @@ import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 import { appRoutes } from './app-routes';
 import { SocialNetsComponent } from './social-nets/social-nets.component';
+import { ActivityGridComponent } from './activity-grid/activity-grid.component';
 
 
 
@@ -20,7 +21,8 @@ import { SocialNetsComponent } from './social-nets/social-nets.component';
     AppComponent,
     AboutComponent,
     HomeComponent,
-    SocialNetsComponent
+    SocialNetsComponent,
+    ActivityGridComponent
   ],
   imports: [
     BrowserModule,
@@ -29,6 +31,7 @@ import { SocialNetsComponent } from './social-nets/social-nets.component';
     MdListModule,
     MdSidenavModule,
     MdButtonModule,
+    MdGridListModule,
      RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
