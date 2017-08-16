@@ -1,4 +1,12 @@
- <md-grid-list cols="3">
+ <md-grid-list (window:resize)="onResize($event)" cols="{{cols}}">
    
-   <md-grid-tile *ngFor="let item of items"><div class="mat-h3" [innerHTML]="item.body"></div></md-grid-tile>
+   <md-grid-tile *ngFor="let item of items">
+     <div class="container"><img [src]="item.image.Url" [alt]="item.header" class="image">
+      <div class="middlebox">
+        <div class="middle">
+          <div class="mat-body-2" [innerHTML]="item.body"></div>
+        </div>
+      </div>
+    </div>
+    </md-grid-tile>
  </md-grid-list>
