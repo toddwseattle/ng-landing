@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { SocialNetsComponent } from './social-nets.component';
 
@@ -8,7 +9,8 @@ describe('SocialNetsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SocialNetsComponent ]
+      declarations: [ SocialNetsComponent ],
+       schemas:      [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   }));
