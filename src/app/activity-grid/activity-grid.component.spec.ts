@@ -24,4 +24,20 @@ describe('ActivityGridComponent', () => {
   it('should be created', () => {
     expect(component).toBeTruthy();
   });
+  it('should have a cols property', () => {
+    expect(component.cols).toBeDefined();
+  });
+  it('should have Sizecols function', () => {
+    expect(component.sizeCols).toBeDefined();
+  });
+  it('sizeCols should return 1 if passed a small value', () => {
+    expect(component.sizeCols(6)).toBeCloseTo(1);
+  });
+  it('sizeCols should return 3 if passed a value larger than 900', () => {
+    expect(component.sizeCols(901)).toBeCloseTo(3);
+  });
+    it('onResize Event should change columns property as a side effect', () => {
+    component.onResize({ target: { innerWidth: 1300}});
+    expect(component.cols).toBeCloseTo(4);
+  });
 });

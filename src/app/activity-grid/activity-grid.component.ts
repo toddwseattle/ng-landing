@@ -33,7 +33,7 @@ export class ActivityGridComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.cols =this.sizeCols(this.el.nativeElement.offsetWdith);
+    this.cols = this.sizeCols(this.el.nativeElement.offsetWdith);
   }
   sizeCols(width) {
     return( Math.floor(width / 300) >= 1 ? Math.floor(width / 300) : 1);
@@ -42,7 +42,6 @@ export class ActivityGridComponent implements OnInit {
     const element = event.target.innerWidth;
     console.log(element);
     this.cols = this.sizeCols(element);
-    console.log('columngs %s', this.cols);
   }
 
 }
