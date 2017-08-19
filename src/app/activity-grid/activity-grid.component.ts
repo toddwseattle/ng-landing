@@ -1,7 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { IActivity, Activity, InvestmentActivity, IImage } from '../common/activity';
-import { divergentinvestments } from '../common/activity-data';
-
+import { ActServiceService } from '../common/act-service.service';
 interface ICard {
     header: string;
     body: string;
@@ -21,15 +20,16 @@ interface ICard {
 export class ActivityGridComponent implements OnInit {
   cols = 3;
   items: ICard[]= [];
-  actvites: IActivity[];
-  constructor(public el: ElementRef) {
-    this.actvites = divergentinvestments;
-    this.actvites.forEach(activity => {
+
+  constructor(public el: ElementRef, public as: ActServiceService) {
+    this.as.getactivities().subscribe(acts => {
+      acts.forEach(activity => {
        this.items.push({header: activity.name,
                         body: activity.description,
                         image: activity.image,
                         footer: activity.organization.Url.toString()});
-    }); // forEach activity
+      }); // forEach activity
+    });
   }
 
   ngOnInit() {

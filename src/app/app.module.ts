@@ -13,6 +13,8 @@ import { appRoutes } from './app-routes';
 import { SocialNetsComponent } from './social-nets/social-nets.component';
 import { ActivityGridComponent } from './activity-grid/activity-grid.component';
 
+import { ActServiceService } from './common/act-service.service';
+
 
 
 
@@ -26,7 +28,7 @@ import { ActivityGridComponent } from './activity-grid/activity-grid.component';
   ],
   imports: [
     BrowserModule,
-    MdToolbarModule, 
+    MdToolbarModule,
     MdCardModule,
     MdListModule,
     MdSidenavModule,
@@ -37,7 +39,7 @@ import { ActivityGridComponent } from './activity-grid/activity-grid.component';
       { enableTracing: true } // <-- debugging purposes only
     )
   ],
-  providers: [],
+  providers: [ActServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
