@@ -3,6 +3,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { ActivityGridComponent } from './activity-grid.component';
 import { ActServiceService } from '../common/act-service.service';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 describe('ActivityGridComponent', () => {
   let component: ActivityGridComponent;
@@ -11,7 +12,7 @@ describe('ActivityGridComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ActivityGridComponent ],
-      providers: [ ActServiceService],
+      providers: [ ActServiceService, AngularFireDatabase],
       schemas: [ NO_ERRORS_SCHEMA]
     })
     .compileComponents();

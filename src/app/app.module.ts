@@ -5,6 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import 'hammerjs';
+// firebase related imports
+import { AngularFireModule } from 'angularfire2';
+import { environment } from '../environments/environment';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+
 
 import { AppComponent } from './app.component';
 import { AboutComponent } from './about/about.component';
@@ -34,7 +40,10 @@ import { ActServiceService } from './common/act-service.service';
     MdSidenavModule,
     MdButtonModule,
     MdGridListModule,
-     RouterModule.forRoot(
+    AngularFireModule.initializeApp(environment.firebase, 'ng-landing'),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule,
+    RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
     )

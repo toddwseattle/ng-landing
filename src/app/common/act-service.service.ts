@@ -1,24 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Activity, IActivity, ACTIVETYPE  } from './activity';
+import { Activity, IActivity, ACTIVETYPE, InvestmentActivity  } from './activity';
 import { divergentinvestments } from './activity-data';
 import { Observable } from 'rxjs/observable';
 
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+
 @Injectable()
 export class ActServiceService {
+  public investments: FirebaseListObservable<InvestmentActivity[]>;
 
-  constructor() { }
+  constructor(public db: AngularFireDatabase) {
+    this.investments = db.list('/investments');
+   }
 
-  public getactivities(activities?: ACTIVETYPE[]): Observable<Activity[]> {
+  public getactivities(activities?: ACTIVETYPE[]): FirebaseListObservable<Activity[]> {
     if ( activities == null ) {
-      return Observable.create(obs => {
-        obs.next(divergentinvestments);
-        obs.complete();
-      });
+      return this.investments;
     } else if (activities.indexOf(ACTIVETYPE.Investment) >= 0) {
-      return Observable.create(obs => {
-        obs.next(divergentinvestments);
-        obs.complete();
-      });
+      return this.investments;
     }
   }
 }
