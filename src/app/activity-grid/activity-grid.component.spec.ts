@@ -5,12 +5,19 @@ import { ActivityGridComponent } from './activity-grid.component';
 import { ActServiceService } from '../common/act-service.service';
 import { AngularFireDatabase } from 'angularfire2/database';
 
+import { AngularFireModule } from 'angularfire2';
+import { environment } from '../../environments/environment';
+
 describe('ActivityGridComponent', () => {
   let component: ActivityGridComponent;
   let fixture: ComponentFixture<ActivityGridComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        AngularFireModule.initializeApp(environment.firebase,'ng-landing'),
+      //  AngularFireDatabaseModule
+      ],
       declarations: [ ActivityGridComponent ],
       providers: [ ActServiceService, AngularFireDatabase],
       schemas: [ NO_ERRORS_SCHEMA]
