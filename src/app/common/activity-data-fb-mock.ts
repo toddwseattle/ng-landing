@@ -4,13 +4,13 @@ import { divergentinvestments } from './activity-data';
 import { Activity, ACTIVETYPE } from './activity';
 import { Observable } from 'rxjs/Observable';
 
-const investmentsobs = (observer: any) => {
+export const investmentsobs = (observer: any) => {
     observer.next(divergentinvestments);
 };
 
-export class AngularFireDatabaseMock extends AngularFireDatabase {
+export const AngularFireDatabaseMock = {
     // list(pathOrRef: PathReference, opts?: FirebaseListFactoryOpts): FirebaseListObservable<any[]>;
-    public list(pathOrRef: PathReference, opts?: FirebaseListFactoryOpts): FirebaseListObservable<any[]> {
+    list : function(pathOrRef: PathReference, opts?: FirebaseListFactoryOpts): FirebaseListObservable<any[]> {
         switch (pathOrRef) {
             case '/investments':
                 return(Observable.create(investmentsobs) as FirebaseListObservable<Activity[]>);
@@ -18,4 +18,4 @@ export class AngularFireDatabaseMock extends AngularFireDatabase {
                 break;
         }
     }
-}
+};

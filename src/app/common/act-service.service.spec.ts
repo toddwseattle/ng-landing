@@ -16,9 +16,10 @@ describe('ActServiceService', () => {
       //  AngularFireDatabaseModule
       ],
       providers: [ActServiceService,
-                  AngularFireDatabase
+                 // AngularFireDatabase
+                 {provide: AngularFireDatabase, useValue: AngularFireDatabaseMock}
                 ]
-    }); // {provide: AngularFireDatabase, useValue: AngularFireDatabaseMock}
+    });
   });
 
   it('should be created', inject([ActServiceService], (service: ActServiceService) => {
