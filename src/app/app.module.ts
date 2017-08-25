@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MdToolbarModule, MdSidenavModule, MdCardModule, MdButtonModule, MdListModule, MdGridListModule } from '@angular/material';
+import { MdToolbarModule, MdCheckboxModule, MdSidenavModule, MdCardModule, MdButtonModule,
+         MdListModule, MdGridListModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
@@ -20,6 +21,8 @@ import { SocialNetsComponent } from './social-nets/social-nets.component';
 import { ActivityGridComponent } from './activity-grid/activity-grid.component';
 
 import { ActServiceService } from './common/act-service.service';
+import { AddActivityComponent } from './add-activity/add-activity.component';
+import { EditActivityComponent } from './edit-activity/edit-activity.component';
 
 
 
@@ -30,7 +33,9 @@ import { ActServiceService } from './common/act-service.service';
     AboutComponent,
     HomeComponent,
     SocialNetsComponent,
-    ActivityGridComponent
+    ActivityGridComponent,
+    AddActivityComponent,
+    EditActivityComponent
   ],
   imports: [
     BrowserModule,
@@ -40,12 +45,13 @@ import { ActServiceService } from './common/act-service.service';
     MdSidenavModule,
     MdButtonModule,
     MdGridListModule,
+    MdCheckboxModule,
     AngularFireModule.initializeApp(environment.firebase, 'ng-landing'),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
+      { enableTracing: false } // <-- debugging purposes only
     )
   ],
   providers: [ActServiceService],

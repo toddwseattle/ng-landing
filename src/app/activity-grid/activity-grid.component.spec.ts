@@ -15,7 +15,7 @@ describe('ActivityGridComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        AngularFireModule.initializeApp(environment.firebase,'ng-landing'),
+        AngularFireModule.initializeApp(environment.firebase, 'ng-landing'),
       //  AngularFireDatabaseModule
       ],
       declarations: [ ActivityGridComponent ],

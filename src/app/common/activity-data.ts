@@ -13,6 +13,7 @@ export const  divergentinvestments: InvestmentActivity[] = [
           height : 40,
           width : 192
       },
+      hidden: false,
       description : `TempoIQ is a Chicago Based company doing realtime time series alerting and analytics for the Internet of Things.
 										 Divergent made an investment in 2013 and Todd served on the board of directors.
 										 TempoIQ was sold to Avant in early 2015.`,
@@ -30,7 +31,8 @@ export const  divergentinvestments: InvestmentActivity[] = [
           height : 40,
           width : 192
       },
-   description: `ReadyPulse provides marketers tools for demonstrating social proof at scale.  ReadyPulse enables brands to cultivate
+      hidden: false,
+      description: `ReadyPulse provides marketers tools for demonstrating social proof at scale.  ReadyPulse enables brands to cultivate
 								 brand ambasadors and find the most effective, authentic, and verified social proof to integrate into marketing.
 								 Readypulse was sold to <a href="http://www.experticity.com">Experticity in 2015</a>`,
     vehicle: 'Divergent III'
@@ -47,7 +49,8 @@ export const  divergentinvestments: InvestmentActivity[] = [
      height : 40,
      width : 192
      },
-  description : `BlueTalon, a bay area company, provides a policy engine to help customers safeguard Hadoop data.
+     hidden: false,
+     description : `BlueTalon, a bay area company, provides a policy engine to help customers safeguard Hadoop data.
 								The BlueTalon policy engine provisions and enforces your data access policies and provides controls on even the
 								most sensitive data.  Todd serves as a board observer.`,
   vehicle: 'Divergent III'

@@ -34,7 +34,7 @@ describe('ActServiceService', () => {
       expect(actives.length).toBeGreaterThan(0);
     });
   }));
-  it('getactivities([ACTIVETYPE.Invesment]) should return one or more investment activities',
+  it('getactivities([ACTIVETYPE.Investment]) should return one or more investment activities',
     inject([ActServiceService], (service: ActServiceService, done) => {
       const actobs = service.getactivities([ACTIVETYPE.Investment]);
       actobs.subscribe((actives) => {

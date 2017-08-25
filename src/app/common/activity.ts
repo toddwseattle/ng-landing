@@ -1,7 +1,14 @@
 /**
  * IActivity represents an activity for the personal site.  It contains all the basic fields available across all activities
  */
-export enum ACTIVETYPE {Angel, NonProfit, Investment, Class, DevProject, Presentation }
+export enum ACTIVETYPE {Angel = 'Angel',
+                        NonProfit = 'NonProfit',
+                        Investment = 'Investment',
+                        Class = 'Class',
+                        DevProject = 'Dev Project',
+                        Presentation = 'Presentation'
+                    }
+
 
 export interface  ILink {
     label: string;
@@ -24,12 +31,16 @@ export interface IActivity {
   image: IImage;
   dateStart?: Date;
   dateEnd?: Date;
+  hidden?: boolean;
+  showStart?: Date;
+  showEnd?: Date;
 }
 
 export class Activity implements IActivity {
   id: number;
   activetype: ACTIVETYPE;
   current: boolean;
+  public hidden = false;
   constructor(public name: string,  public organization: ILink,  public description: string,
                 public image: IImage) {
     this.current = true;
