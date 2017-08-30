@@ -1,37 +1,77 @@
 
-.image {
-  opacity: 1;
-  display: block;
-  width: 100%;
-  height: auto;
-  transition: .5s ease;
-  backface-visibility: hidden;
+h1, p {
+  margin: 0;
+  padding: 0 0 .5em;
 }
-.middle {
-  transition: .5s ease;
-  opacity: 0;
+
+.container {
+  margin: 0 auto;
+}
+
+/*
+* Caption component
+*/
+.caption {
+  position: relative;
+  overflow: hidden;
+
+  /* Only the -webkit- prefix is required these days */
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+}
+
+.caption::before {
+  content: ' ';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%)
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: transparent;
+  transition: background .35s ease-out;
 }
 
-.middlebox {
-    width: 100%;
-    height: auto;
-    background-color: white;
-    opacity: 0;
+.caption:hover::before {
+  background: rgba(0, 0, 0, .5);
 }
 
-.container:hover .image {
-    opacity: 0.3;
+.caption__media {
+  position: absolute;
+  min-width: 100%;
+  max-width: 100%;
+  width: 100%;
 }
 
-.container:hover .middle {
-  opacity: 1;
+.caption__overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 10px;
+  color: white;
+
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
+
+  transition: -webkit-transform .35s ease-out;
+  transition:         transform .35s ease-out;
 }
 
-.container:hover .middlebox {
-    opacity: 0.75;
+.caption:hover .caption__overlay {
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+}
+
+.caption__overlay__title {
+  -webkit-transform: translateY( -webkit-calc(-100% - 10px) );
+          transform: translateY( calc(-100% - 10px) );
+
+  transition: -webkit-transform .35s ease-out;
+  transition:         transform .35s ease-out;
+}
+
+.caption:hover .caption__overlay__title {
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
 }

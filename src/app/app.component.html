@@ -1,4 +1,4 @@
-<div fxLayout="column" fxFlex>
+<div fxFlexLayout="column">
 
   <md-toolbar color="primary">
    <button md-button  (click)="sidenav.opened=!sidenav.opened;"><span class="mat-display-1">toddwseattle</span></button>
@@ -9,14 +9,13 @@
     <a md-button routerLink="/about">About</a>
     </div>
   </md-toolbar>
-
-  <md-sidenav-container fxFlex>
+  <md-sidenav-container>
     <md-sidenav #sidenav mode="side" opened="false">
      <app-social-nets></app-social-nets>
+  
     </md-sidenav>
-    <div class="content-area">
-     <router-outlet></router-outlet>
+    <div fxLayout="column" class="content-area" >
+     <router-outlet fxFlex></router-outlet>
     </div>
-  </md-sidenav-container>
-
+ </md-sidenav-container>
 </div>

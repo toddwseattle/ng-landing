@@ -1,7 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+// material design and FxFlex
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdToolbarModule, MdCheckboxModule, MdSidenavModule, MdCardModule, MdButtonModule,
          MdListModule, MdGridListModule } from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
@@ -39,6 +42,8 @@ import { EditActivityComponent } from './edit-activity/edit-activity.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    FlexLayoutModule,
     MdToolbarModule,
     MdCardModule,
     MdListModule,

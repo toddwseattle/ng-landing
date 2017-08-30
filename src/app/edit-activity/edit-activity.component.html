@@ -1,8 +1,16 @@
-<h2>Current Activities</h2>
-<div>
-    <button md-raised-button (click)="addActivity()">Add</button>
-</div>
-<md-nav-list>
+<div fxLayout="column" fxLayoutAlign="space-around"  fxFlex>
+    <h2 fxFlex>Current Activities</h2>
+    <div fxLayout="row">
+        <button md-raised-button (click)="addActivity()">Add</button>
+        <button md-raised-button (click)="addActivity()">Apply</button>
+    </div>
+<md-nav-list fxFlex>
+    <md-list-item class="full">
+        <div class="col-5">Hide</div>
+        <div class="col-20">Name</div>
+        <div class="col-40">Description</div>
+        <div class="col-10">Type</div>
+    </md-list-item>
     <md-list-item class="full" *ngFor="let activity of (activities$ | async)" >
         <div class="col-5"><md-checkbox [(value)]="activity.hidden"></md-checkbox></div>
         <div class="col-20">{{activity.name}}</div>
@@ -10,20 +18,5 @@
         <div class="col-10">{{activity.activetype}}</div>
     </md-list-item>
 </md-nav-list>
-<div fxLayout="column" flex="100">
-<div layout-align="space-around" flex="10">x</div>
-<div layout-align="space-around" flex="10">x</div>
-<div flex="3">activity.name</div>
-<div flex="30">activity.description.substr(0,20)...</div>
-<div flex="20">activity.activetype</div>
 </div>
-<div>
-    <div layout="row">
-      <div flex>First item in row</div>
-      <div flex="20">Second item in row</div>
-    </div>
-    <div layout="column">
-      <div flex="66">First item in column</div>
-      <div flex="33">Second item in column</div>
-    </div>
-  </div>
+
