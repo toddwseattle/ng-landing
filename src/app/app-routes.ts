@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 import { EditActivityComponent } from './edit-activity/edit-activity.component';
+import { AddActivityComponent } from './add-activity/add-activity.component';
 export const appRoutes: Routes = [
     {
         path: 'home',
@@ -14,6 +15,10 @@ export const appRoutes: Routes = [
     {
         path: 'editactivity',
         component: EditActivityComponent
+    },
+    {
+        path: 'activity',
+        component: AddActivityComponent
     },
     {
         path: '',
