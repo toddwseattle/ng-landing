@@ -8,6 +8,10 @@ export enum ACTIVETYPE {Angel = 'Angel',
                         DevProject = 'Dev Project',
                         Presentation = 'Presentation'
                     }
+export const allActivities = [ ACTIVETYPE.Angel, ACTIVETYPE.Class,
+                         ACTIVETYPE.DevProject, ACTIVETYPE.Investment,
+                          ACTIVETYPE.NonProfit, ACTIVETYPE.Presentation];
+
 
 
 export interface  ILink {
@@ -48,6 +52,7 @@ export class Activity implements IActivity {
 }
 
 export class AngelActivity extends Activity {
+    public crunchbaseUrl: string;
     constructor(public name: string,  public organization: ILink,  public description: string,
                 public image: IImage) {
         super(name, organization, description, image);
@@ -75,6 +80,8 @@ export class InvestmentActivity extends Activity {
 
 
 export class ClassActivity extends Activity {
+    public department: ILink;
+    public syllabus: ILink;
     constructor(public name: string,  public organization: ILink,  public description: string,
                 public image: IImage) {
         super(name, organization, description, image);
@@ -84,6 +91,7 @@ export class ClassActivity extends Activity {
 
 
 export class DevProjectActivity extends Activity {
+    public repository: ILink; // github repository link
     constructor(public name: string,  public organization: ILink,  public description: string,
                 public image: IImage) {
         super(name, organization, description, image);
@@ -93,6 +101,7 @@ export class DevProjectActivity extends Activity {
 
 
 export class PresentationActivity extends Activity {
+    public presentation: ILink;
     constructor(public name: string,  public organization: ILink,  public description: string,
                 public image: IImage) {
         super(name, organization, description, image);

@@ -2,10 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 // material design and FxFlex
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdToolbarModule, MdCheckboxModule, MdSidenavModule, MdCardModule, MdButtonModule,
-         MdListModule, MdGridListModule } from '@angular/material';
+import { MdToolbarModule, MdInputModule, MdCheckboxModule, MdSidenavModule, MdCardModule,
+         MdButtonModule, MdSelectModule, MdListModule, MdGridListModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import 'hammerjs';
@@ -51,6 +51,10 @@ import { EditActivityComponent } from './edit-activity/edit-activity.component';
     MdButtonModule,
     MdGridListModule,
     MdCheckboxModule,
+    MdInputModule,
+    MdSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase, 'ng-landing'),
     AngularFireAuthModule,
     AngularFireDatabaseModule,

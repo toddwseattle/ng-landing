@@ -1,3 +1,30 @@
-<p>
-  add-activity works!
-</p>
+<h2 class="mat-h2">Edit Activity</h2>
+<form [formGroup]="generalForm" novalidate>
+  <div fxLayout="column" fxLayoutAlign="start start">
+    <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start">
+        
+      <md-select placeholder="Activity Type" formControlName="type" fxFlex="25%">
+        <md-option *ngFor="let a of allActivities" [value]="a">{{a}}</md-option>
+      </md-select>
+    
+      
+      <md-form-field fxFlex="20%">
+          <input type="date" formControlName="start" placeholder="Start" mdInput >
+      </md-form-field>
+      <md-checkbox formControlName="hasend" fxFlex="10%">End</md-checkbox>
+      <md-form-field *ngIf="generalForm.value['hasend']" fxFlex="20%">
+          <input type="date" formControlName="end" placeholder="End" mdInput >
+      </md-form-field>
+      <md-form-field fxFlex="55%">
+          <input type="text" formControlName="name" placeholder="Enter Name" mdInput >
+      </md-form-field> 
+      <md-form-field fxFlex="100%">
+        <textarea mdInput placeholder="description" formControlname="description" ></textarea>
+     </md-form-field>
+    </div>
+    <div  fxFlex="10%">
+      <md-checkbox formControlName="hidden">Hidden</md-checkbox>
+    </div>
+  </div>
+</form>
+<h2 class="mat-h2">{{generalForm.value | json}}</h2>
