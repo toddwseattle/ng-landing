@@ -69,4 +69,18 @@
             </md-form-field>
           </div>          
     </div>
+    <div formGroupName="devproject" *ngIf="isDevProject(generalForm.value['type'])">
+        <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start">
+            <md-form-field fxFlex="60%">
+                <input type="text" formControlName="giturl" placeholder="git repository url" mdInput>
+            </md-form-field>
+        </div>          
+    </div>
+    <div formGroupName="present" *ngIf="isPresent(generalForm.value['type'])">
+        <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start">
+            <md-form-field fxFlex="60%">
+                <input type="text" formControlName="presenturl" placeholder="link to presentation" mdInput>
+            </md-form-field>
+        </div>          
+    </div>
 </form>

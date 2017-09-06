@@ -43,6 +43,12 @@ export class AddActivityComponent implements OnInit {
       nonprofit: this.fb.group({
         orglabel: ['', Validators.required],
         orgurl: ['', [Validators.required, Validators.pattern(this.urlpattern)]]
+      }),
+      devproject: this.fb.group({
+        giturl: ['http://www.github.com/<username>/<repo>', [Validators.required, Validators.pattern(this.urlpattern)]]
+      }),
+      present: this.fb.group({
+        presenturl: ['', [Validators.required, Validators.pattern(this.urlpattern)]]
       })
     });
    }
@@ -51,12 +57,22 @@ export class AddActivityComponent implements OnInit {
   }
 
   isInvestment(a: ACTIVETYPE) {
-    return(a === ACTIVETYPE.Investment);
+    return((a === ACTIVETYPE.Investment) || (a === ACTIVETYPE.Angel));
   }
+
   isClass(a: ACTIVETYPE) {
     return(a === ACTIVETYPE.Class);
   }
+
   isNonprofit(a: ACTIVETYPE) {
     return(a === ACTIVETYPE.NonProfit);
   }
+
+  isDevProject(a: ACTIVETYPE) {
+      return(a === ACTIVETYPE.DevProject);
+  }
+
+  isPresent(a: ACTIVETYPE) {
+    return(a === ACTIVETYPE.Presentation);
+}
 }
