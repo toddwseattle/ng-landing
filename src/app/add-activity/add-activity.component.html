@@ -59,4 +59,14 @@
         </md-form-field>
       </div>        
     </div>
+    <div formGroupName="nonprofit" *ngIf="isNonprofit(generalForm.value['type'])">
+        <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start">
+            <md-form-field fxFlex="30%">
+              <input type="text" formControlName="orglabel" placeholder="organization name text" mdInput>
+            </md-form-field>
+            <md-form-field fxFlex="60%">
+                <input type="text" formControlName="orgurl" placeholder="organization url" mdInput>
+            </md-form-field>
+          </div>          
+    </div>
 </form>

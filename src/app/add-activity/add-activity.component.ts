@@ -34,11 +34,15 @@ export class AddActivityComponent implements OnInit {
         crunchbaseurl: ['http://www.crunchbase.com/', Validators.pattern(this.urlpattern) ]
       }),
       class: this.fb.group({
-        schoolUrl: ['', Validators.pattern(this.urlpattern)],
+        schoolUrl: ['', [Validators.required, Validators.pattern(this.urlpattern)]],
         schoolLabel: ['', ],
         departmentUrl: ['', Validators.pattern(this.urlpattern)],
         departmentLabel: ['', ],
         syllabusUrl: ['', Validators.pattern(this.urlpattern)],
+      }),
+      nonprofit: this.fb.group({
+        orglabel: ['', Validators.required],
+        orgurl: ['', [Validators.required, Validators.pattern(this.urlpattern)]]
       })
     });
    }
@@ -52,5 +56,7 @@ export class AddActivityComponent implements OnInit {
   isClass(a: ACTIVETYPE) {
     return(a === ACTIVETYPE.Class);
   }
-
+  isNonprofit(a: ACTIVETYPE) {
+    return(a === ACTIVETYPE.NonProfit);
+  }
 }
