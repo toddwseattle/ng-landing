@@ -9,7 +9,9 @@ import { ACTIVETYPE, allActivities } from '../common/activity';
 })
 export class AddActivityComponent implements OnInit {
   generalForm: FormGroup;
+  investmentForm: FormGroup;
   allActivities = allActivities;
+  urlpattern= /[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
 
   constructor(private fb: FormBuilder, public router: Router) {
@@ -23,10 +25,32 @@ export class AddActivityComponent implements OnInit {
       start: [(new Date(Date.now())).toISOString().slice(0, 10) , ] ,
       end: [(new Date(Date.now())).toISOString().slice(0, 10), ],
       description: ['', ],
-      hidden: [false, ]
+      hidden: [false, ],
+      image: ['', ],
+      investment: this.fb.group({
+        divergent: [true, Validators.required],
+        companylabel: ['', Validators.required],
+        companyurl: ['', [Validators.required, Validators.pattern(this.urlpattern)]],
+        crunchbaseurl: ['http://www.crunchbase.com/', Validators.pattern(this.urlpattern) ]
+      }),
+      class: this.fb.group({
+        schoolUrl: ['', Validators.pattern(this.urlpattern)],
+        schoolLabel: ['', ],
+        departmentUrl: ['', Validators.pattern(this.urlpattern)],
+        departmentLabel: ['', ],
+        syllabusUrl: ['', Validators.pattern(this.urlpattern)],
+      })
     });
-  }
+   }
+
   ngOnInit() {
+  }
+
+  isInvestment(a: ACTIVETYPE) {
+    return(a === ACTIVETYPE.Investment);
+  }
+  isClass(a: ACTIVETYPE) {
+    return(a === ACTIVETYPE.Class);
   }
 
 }

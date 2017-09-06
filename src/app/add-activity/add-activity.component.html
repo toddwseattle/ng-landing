@@ -1,6 +1,5 @@
 <h2 class="mat-h2">Edit Activity</h2>
 <form [formGroup]="generalForm" novalidate>
-  <div fxLayout="column" fxLayoutAlign="start start">
     <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start">
         
       <md-select placeholder="Activity Type" formControlName="type" fxFlex="25%">
@@ -21,10 +20,43 @@
       <md-form-field fxFlex="100%">
         <textarea mdInput placeholder="description" formControlname="description" ></textarea>
      </md-form-field>
-    </div>
     <div  fxFlex="10%">
       <md-checkbox formControlName="hidden">Hidden</md-checkbox>
     </div>
   </div>
+  
+<div formGroupName="investment" *ngIf="isInvestment(generalForm.value['type'])">
+    <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start">
+      <md-form-field fxFlex="30%">
+        <input type="text" formControlName="companylabel" placeholder="company name text" mdInput>
+      </md-form-field>
+      <md-form-field fxFlex="60%">
+          <input type="text" formControlName="companyurl" placeholder="company name url" mdInput>
+      </md-form-field>
+      <md-form-field fxFlex="60%">
+          <input type="text" formControlName="crunchbaseurl" placeholder="crunchbase company url" mdInput>
+      </md-form-field>
+      <div  fxFlex="20%">
+        <md-checkbox formControlName="divergent">Divergent Investment</md-checkbox>
+      </div>
+    </div>        
+  </div>
+  <div formGroupName="class" *ngIf="isClass(generalForm.value['type'])">
+      <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start">
+          <md-form-field fxFlex="30%">
+              <input type="text" formControlName="schoolLabel" placeholder="School Name" mdInput>
+            </md-form-field>
+            <md-form-field fxFlex="60%">
+                <input type="text" formControlName="schoolUrl" placeholder="School website url" mdInput>
+            </md-form-field> <md-form-field fxFlex="30%">
+          <input type="text" formControlName="departmentLabel" placeholder="Department Name" mdInput>
+        </md-form-field>
+        <md-form-field fxFlex="60%">
+            <input type="text" formControlName="departmentUrl" placeholder="Department page url" mdInput>
+        </md-form-field>
+        <md-form-field fxFlex="60%">
+            <input type="text" formControlName="syllabusUrl" placeholder="Syllabus url" mdInput>
+        </md-form-field>
+      </div>        
+    </div>
 </form>
-<h2 class="mat-h2">{{generalForm.value | json}}</h2>
