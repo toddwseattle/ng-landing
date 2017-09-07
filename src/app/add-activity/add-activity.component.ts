@@ -20,13 +20,14 @@ export class AddActivityComponent implements OnInit {
   createGeneralform() {
     this.generalForm = this.fb.group({
       type: [ACTIVETYPE.Investment, Validators.required],
-      name: ['', Validators.required],
-      hasend: [false, ],
-      start: [(new Date(Date.now())).toISOString().slice(0, 10) , ] ,
-      end: [(new Date(Date.now())).toISOString().slice(0, 10), ],
-      description: ['', ],
-      hidden: [false, ],
-      image: ['', ],
+      general: this.fb.group({
+        name: ['', Validators.required],
+        hasend: [false, ],
+        start: [(new Date(Date.now())).toISOString().slice(0, 10) , ] ,
+        end: [(new Date(Date.now())).toISOString().slice(0, 10), ],
+        description: ['', ],
+        hidden: [false, ],
+        image: ['', ] }),
       investment: this.fb.group({
         divergent: [true, Validators.required],
         companylabel: ['', Validators.required],
