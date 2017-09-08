@@ -4,6 +4,8 @@ export const  divergentinvestments: InvestmentActivity[] = [
   {
       id : 1,
       activetype: ACTIVETYPE.Investment,
+      dateStart: null,
+      dateEnd: null,
       current: false,
       name: 'TempoIQ',
       crunchbaseUrl: 'https://www.crunchbase.com/organization/tempo',
@@ -22,6 +24,8 @@ export const  divergentinvestments: InvestmentActivity[] = [
   {
     id: 2,
     activetype: ACTIVETYPE.Investment,
+    dateStart: null,
+    dateEnd: null,
     name: 'ReadyPulse',
     current: false,
     organization: { Url: 'http://www.readypulse.com', label: 'ReadyPulse'},
@@ -40,6 +44,8 @@ export const  divergentinvestments: InvestmentActivity[] = [
 {
   id: 3,
   activetype: ACTIVETYPE.Investment,
+  dateStart: null,
+  dateEnd: null,
   name: 'BlueTalon',
   current: true,
   organization: { Url:  'http://www.bluetalon.com', label: 'BlueTalon'},

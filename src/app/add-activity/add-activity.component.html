@@ -1,8 +1,8 @@
 <h2 class="mat-h2">Edit Activity</h2>
-<form [formGroup]="generalForm" novalidate>
+<form [formGroup]="generalForm"  (ngSubmit)="saveAndclose(generalForm)">
     <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start">
-      <md-card fxFlex="100%" *ngIf="generalForm.dirty&&generalForm.controls['general'].invalid" color="warning">Invalid Form</md-card>
-      <md-select placeholder="Activity Type" formControlName="type" fxFlex="25%">
+      <md-card class="warning" fxFlex="100%" *ngIf="generalForm.dirty&&generalForm.controls['general'].invalid">Invalid Form</md-card>
+      <md-select placeholder="Activity Type" formControlName="activetype" fxFlex="25%">
         <md-option *ngFor="let a of allActivities" [value]="a">{{a}}</md-option>
       </md-select>
     </div>
@@ -18,14 +18,14 @@
                 <input type="text" formControlName="name" placeholder="Enter Name" mdInput >
             </md-form-field> 
             <md-form-field fxFlex="100%">
-                <textarea mdInput placeholder="description" formControlname="description" ></textarea>
+                <textarea mdInput placeholder="description" formControlName="description" ></textarea>
             </md-form-field>
             <div  fxFlex="10%">
             <md-checkbox formControlName="hidden">Hidden</md-checkbox>
             </div>
         </div>
   
-<div formGroupName="investment" *ngIf="isInvestment(generalForm.value['type'])">
+<div formGroupName="investment" *ngIf="isInvestment(generalForm.value['activetype'])">
     <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start">
       <md-form-field fxFlex="30%">
         <input type="text" formControlName="companylabel" placeholder="company name text" mdInput>
@@ -41,7 +41,7 @@
       </div>
     </div>        
   </div>
-  <div formGroupName="class" *ngIf="isClass(generalForm.value['type'])">
+  <div formGroupName="class" *ngIf="isClass(generalForm.value['activetype'])">
       <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start">
           <md-form-field fxFlex="30%">
               <input type="text" formControlName="schoolLabel" placeholder="School Name" mdInput>
@@ -59,7 +59,7 @@
         </md-form-field>
       </div>        
     </div>
-    <div formGroupName="nonprofit" *ngIf="isNonprofit(generalForm.value['type'])">
+    <div formGroupName="nonprofit" *ngIf="isNonprofit(generalForm.value['activetype'])">
         <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start">
             <md-form-field fxFlex="30%">
               <input type="text" formControlName="orglabel" placeholder="organization name text" mdInput>
@@ -69,18 +69,19 @@
             </md-form-field>
           </div>          
     </div>
-    <div formGroupName="devproject" *ngIf="isDevProject(generalForm.value['type'])">
+    <div formGroupName="devproject" *ngIf="isDevProject(generalForm.value['activetype'])">
         <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start">
             <md-form-field fxFlex="60%">
                 <input type="text" formControlName="giturl" placeholder="git repository url" mdInput>
             </md-form-field>
         </div>          
     </div>
-    <div formGroupName="present" *ngIf="isPresent(generalForm.value['type'])">
+    <div formGroupName="present" *ngIf="isPresent(generalForm.value['activetype'])">
         <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start">
             <md-form-field fxFlex="60%">
                 <input type="text" formControlName="presenturl" placeholder="link to presentation" mdInput>
             </md-form-field>
         </div>          
     </div>
+    <button md-raised-button color="primary">Add</button>
 </form>

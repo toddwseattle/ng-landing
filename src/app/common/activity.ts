@@ -5,7 +5,7 @@ export enum ACTIVETYPE {Angel = 'Angel',
                         NonProfit = 'NonProfit',
                         Investment = 'Investment',
                         Class = 'Class',
-                        DevProject = 'Dev Project',
+                        DevProject = 'DevProject',
                         Presentation = 'Presentation'
                     }
 export const allActivities = [ ACTIVETYPE.Angel, ACTIVETYPE.Class,
@@ -25,6 +25,18 @@ export interface IImage {
     altText?: string;
 }
 
+// this matches the general part of the add form
+export interface IActivityGeneralProps {
+    activetype: ACTIVETYPE;
+    name: string;
+    description: string;
+    hidden: boolean;
+    image: IImage;
+    hasend: boolean;
+    start: string;
+    end: string;
+}
+
 export interface IActivity {
   id: number;
   activetype: ACTIVETYPE;
@@ -33,37 +45,52 @@ export interface IActivity {
   organization: ILink;
   description: string;
   image: IImage;
-  dateStart?: Date;
-  dateEnd?: Date;
+  dateStart?: number;
+  dateEnd?: number;
   hidden?: boolean;
-  showStart?: Date;
-  showEnd?: Date;
 }
 
 export class Activity implements IActivity {
-  id: number;
-  activetype: ACTIVETYPE;
-  current: boolean;
+  public id: number;
+  public activetype: ACTIVETYPE;
+  public current = true;
   public hidden = false;
-  constructor(public name: string,  public organization: ILink,  public description: string,
-                public image: IImage) {
-    this.current = true;
+  public name: string;
+  public description: string;
+  public image: IImage;
+  public dateStart: number;
+  public dateEnd: number;
+
+  constructor(gen: IActivityGeneralProps, public organization: ILink) {
+    this.activetype = gen.activetype;
+    this.hidden = gen.hidden;
+    this.name = gen.name;
+    this.description = gen.description;
+    this.image = gen.image;
+    this.dateStart = (new Date(gen.start)).getTime();
+    if ( gen.hasend ) {
+      this.dateEnd = (new Date(gen.end)).getTime();
+      if (this.dateEnd < Date.now() ) {
+        this.current = false;
+      }
+    } else {
+        this.dateEnd = 0;
+    }
   }
+
 }
 
 export class AngelActivity extends Activity {
     public crunchbaseUrl: string;
-    constructor(public name: string,  public organization: ILink,  public description: string,
-                public image: IImage) {
-        super(name, organization, description, image);
+    constructor(gen: IActivityGeneralProps,  public organization: ILink) {
+        super(gen, organization);
         this.activetype = ACTIVETYPE.Angel;
     }
 }
 
 export class NonProfitActivity extends Activity {
-    constructor(public name: string,  public organization: ILink,  public description: string,
-                public image: IImage) {
-        super(name, organization, description, image);
+    constructor(gen: IActivityGeneralProps,  public organization: ILink) {
+        super(gen, organization);
         this.activetype = ACTIVETYPE.NonProfit;
     }
 }
@@ -71,9 +98,8 @@ export class NonProfitActivity extends Activity {
 
 export class InvestmentActivity extends Activity {
     public crunchbaseUrl: string;
-    constructor(public name: string,  public organization: ILink,  public description: string,
-                public image: IImage, public vehicle = 'Angel') {
-        super(name, organization, description, image);
+    constructor(gen: IActivityGeneralProps, public organization: ILink, public vehicle = 'Angel') {
+        super(gen, organization);
         this.activetype = ACTIVETYPE.Investment;
     }
 }
@@ -82,9 +108,8 @@ export class InvestmentActivity extends Activity {
 export class ClassActivity extends Activity {
     public department: ILink;
     public syllabus: ILink;
-    constructor(public name: string,  public organization: ILink,  public description: string,
-                public image: IImage) {
-        super(name, organization, description, image);
+    constructor(gen: IActivityGeneralProps, public organization: ILink) {
+        super(gen, organization);
         this.activetype = ACTIVETYPE.Class;
     }
 }
@@ -92,9 +117,8 @@ export class ClassActivity extends Activity {
 
 export class DevProjectActivity extends Activity {
     public repository: ILink; // github repository link
-    constructor(public name: string,  public organization: ILink,  public description: string,
-                public image: IImage) {
-        super(name, organization, description, image);
+    constructor(gen: IActivityGeneralProps, public organization: ILink = {Url: null, label: null}) {
+        super(gen, organization);
         this.activetype = ACTIVETYPE.DevProject;
     }
 }
@@ -102,9 +126,8 @@ export class DevProjectActivity extends Activity {
 
 export class PresentationActivity extends Activity {
     public presentation: ILink;
-    constructor(public name: string,  public organization: ILink,  public description: string,
-                public image: IImage) {
-        super(name, organization, description, image);
+    constructor(gen: IActivityGeneralProps, public organization: ILink = {Url: null, label: null}) {
+        super(gen, organization);
         this.activetype = ACTIVETYPE.Presentation;
     }
 }

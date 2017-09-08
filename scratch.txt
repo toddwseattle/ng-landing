@@ -1,0 +1,1 @@
+[ngStyle]="'background-image:url('+item.image.Url+')'"
