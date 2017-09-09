@@ -48,6 +48,7 @@ export interface IActivity {
   dateStart?: number;
   dateEnd?: number;
   hidden?: boolean;
+  $ref?: any;
 }
 
 export class Activity implements IActivity {
