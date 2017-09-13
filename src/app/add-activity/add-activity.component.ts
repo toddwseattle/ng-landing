@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap, Params } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ACTIVETYPE, allActivities, IActivity,
          AngelActivity, ClassActivity, DevProjectActivity,
@@ -8,6 +8,8 @@ import { ACTIVETYPE, allActivities, IActivity,
          } from '../common/activity';
 import { ActServiceService } from '../common/act-service.service';
 import { FirebaseObjectObservable } from 'angularfire2/database';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/switchMap';
 import { Thenable } from 'firebase';
 
 // interface to mimic shape of the form
@@ -49,18 +51,49 @@ export class AddActivityComponent implements OnInit {
   generalForm: FormGroup;
   investmentForm: FormGroup;
   allActivities = allActivities;
-  $currentActivity: FirebaseObjectObservable<IActivity> = null;
+  $currentActivity: Observable<IActivity> = null;
+  currentActivityType = ACTIVETYPE.Investment;
   urlpattern= /[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
 
 
-  constructor(private fb: FormBuilder, public router: Router, public as: ActServiceService) {
+  constructor(private fb: FormBuilder, public router: Router, public route: ActivatedRoute, public as: ActServiceService) {
+
     this.createGeneralform();
    }
 
    ngOnInit() {
+    this.$currentActivity=this.route.paramMap.switchMap( (params: ParamMap) => {
+      if ( params.get('type')) {
+        this.currentActivityType = ACTIVETYPE[params.get('type')];
+        if ( params.get('key')) {
+         return(this.as.getActivitybyKey(this.currentActivityType, params.get('key')));
+        } else  {
+           return null;
+        }
+      } else {
+        return null;
+      }
+    });
+      this.$currentActivity.subscribe(curact => {
+        this.generalForm.patchValue({ activetype: curact.activetype, general: this.genPropsfromActivity(curact) });
+
+      });
+
   }
 
+  genPropsfromActivity(a: IActivity): IActivityGeneralProps {
+    return ({
+               activetype: a.activetype,
+               name: a.name,
+               start: (new Date(a.dateStart).toDateString()),
+               end: a.dateEnd > 0 ? (new Date(a.dateEnd).toDateString()) : '',
+               hasend: a.dateEnd > 0,
+               hidden: a.hidden,
+               description: a.description,
+               image: a.image
+             });
+  }
   saveAndclose({value, valid}: {value: IAddActivity, valid: boolean}) {
     switch (value.activetype) {
       case ACTIVETYPE.Class: this.createAndsaveClass(value, valid);
@@ -79,6 +112,9 @@ export class AddActivityComponent implements OnInit {
     }
   }
 
+  getImagefromIAddActivity(aa: IAddActivity): IImage {
+    return({ Url: null, height: 0, width: 0 }); // bug bug this is temporary until there is an image chooser)
+  }
   createAndsaveDev(value: IAddActivity, valid: boolean) {
     console.log('SaveDev not implemented');
     console.log('value : ' + value + 'valid:' + valid);
@@ -96,8 +132,9 @@ export class AddActivityComponent implements OnInit {
     console.log('Save Investment not implemented');
     console.log('value : ' + value + 'valid:' + valid);
   }
+
   createAndsaveClass(value: IAddActivity, valid: boolean)  {
-    const classimage: IImage = { Url: null, height: 0, width: 0 };  // bug bug this is temporary until there is an image chooser
+    const classimage: IImage = this.getImagefromIAddActivity(value);
     const orglink: ILink = {label: value.class.schoolLabel,
                            Url: value.class.schoolUrl };
     value.general.image = classimage;
@@ -116,7 +153,7 @@ export class AddActivityComponent implements OnInit {
 
   createGeneralform() {
     this.generalForm = this.fb.group({
-      activetype: [ACTIVETYPE.Investment, Validators.required],
+      activetype: [this.currentActivityType, Validators.required],
       general: this.fb.group({
         name: ['', Validators.required],
         hasend: [false, ],

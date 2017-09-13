@@ -42,4 +42,12 @@ describe('ActServiceService', () => {
         expect(actives.every(v => (v.activetype === ACTIVETYPE.Investment)));
       });
   }));
+  it('getActivityKeybyName should exist',
+  inject([ActServiceService], (service: ActServiceService, done) => {
+    expect(service.getActivitybyKey).toBeTruthy();
+    }));
+  it('getActivityKeybyName(ACTIVETYPE.INVESTMENT,"BlueTalon") should exist',
+    inject([ActServiceService], (service: ActServiceService, done) => {
+      expect(service.getActivitybyKey).toBeTruthy();
+    }));
 });

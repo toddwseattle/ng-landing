@@ -47,8 +47,9 @@ export interface IActivity {
   image: IImage;
   dateStart?: number;
   dateEnd?: number;
-  hidden?: boolean;
+  hidden: boolean;
   $ref?: any;
+  $key?: any;
 }
 
 export class Activity implements IActivity {
@@ -61,6 +62,8 @@ export class Activity implements IActivity {
   public image: IImage;
   public dateStart: number;
   public dateEnd: number;
+  public $ref?: any;
+  public $key?: any;
 
   constructor(gen: IActivityGeneralProps, public organization: ILink) {
     this.activetype = gen.activetype;

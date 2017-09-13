@@ -17,7 +17,7 @@ export const appRoutes: Routes = [
         component: EditActivityComponent
     },
     {
-        path: 'activity',
+        path: 'activity/:type/:key',
         component: AddActivityComponent
     },
     {

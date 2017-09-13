@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActServiceService } from '../common/act-service.service';
-import { Activity, ACTIVETYPE } from '../common/activity';
+import { IActivity, Activity, ACTIVETYPE } from '../common/activity';
 import { FirebaseListObservable } from 'angularfire2/database';
 import { Observable } from 'rxjs/observable';
 
@@ -11,8 +11,7 @@ import { Observable } from 'rxjs/observable';
   styleUrls: ['./edit-activity.component.css']
 })
 export class EditActivityComponent implements OnInit {
-  activities$: Observable<Activity[]>;
-  activitysnap: Activity[]= [];
+  activities$: Observable<IActivity[]>;
   deletelist: string[]= [];
   constructor(public as: ActServiceService, public router: Router) {
     this.activities$ = as.getactivities();
@@ -33,5 +32,9 @@ export class EditActivityComponent implements OnInit {
     } else {
       this.deletelist.push(id);
     }
+  }
+ activityClick(a: IActivity) {
+    console.log(a.name + ': ' + a.activetype);
+   // this.as.getActivitybyName(a.activetype, a.name).subscribe(key => console.log(key));
   }
 }
