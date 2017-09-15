@@ -28,13 +28,13 @@
 <div formGroupName="investment" *ngIf="isInvestment(generalForm.value['activetype'])">
     <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start">
       <md-form-field fxFlex="30%">
-        <input type="text" formControlName="companylabel" placeholder="company name text" mdInput>
+        <input type="text" formControlName="companyLabel" placeholder="company name text" mdInput>
       </md-form-field>
       <md-form-field fxFlex="60%">
-          <input type="text" formControlName="companyurl" placeholder="company name url" mdInput>
+          <input type="text" formControlName="companyUrl" placeholder="company name url" mdInput>
       </md-form-field>
       <md-form-field fxFlex="60%">
-          <input type="text" formControlName="crunchbaseurl" placeholder="crunchbase company url" mdInput>
+          <input type="text" formControlName="crunchbaseUrl" placeholder="crunchbase company url" mdInput>
       </md-form-field>
       <div  fxFlex="20%">
         <md-checkbox formControlName="divergent">Divergent Investment</md-checkbox>
@@ -62,26 +62,33 @@
     <div formGroupName="nonprofit" *ngIf="isNonprofit(generalForm.value['activetype'])">
         <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start">
             <md-form-field fxFlex="30%">
-              <input type="text" formControlName="orglabel" placeholder="organization name text" mdInput>
+              <input type="text" formControlName="orgLabel" placeholder="organization name text" mdInput>
             </md-form-field>
             <md-form-field fxFlex="60%">
-                <input type="text" formControlName="orgurl" placeholder="organization url" mdInput>
+                <input type="text" formControlName="orgUrl" placeholder="organization url" mdInput>
             </md-form-field>
-          </div>          
+        </div>          
     </div>
     <div formGroupName="devproject" *ngIf="isDevProject(generalForm.value['activetype'])">
         <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start">
-            <md-form-field fxFlex="60%">
-                <input type="text" formControlName="giturl" placeholder="git repository url" mdInput>
+            <md-form-field fxFlex="30%">
+                <input type="text" formControlName="gitUrl" placeholder="git repository url" mdInput>
             </md-form-field>
+            <md-form-field fxFlex="20%">
+                <input type="text" formControlName="projectLabel" placeholder="organization name text" mdInput>
+              </md-form-field>
+              <md-form-field fxFlex="40%">
+                  <input type="text" formControlName="projectUrl" placeholder="organization url" mdInput>
+              </md-form-field>
         </div>          
     </div>
     <div formGroupName="present" *ngIf="isPresent(generalForm.value['activetype'])">
         <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start">
             <md-form-field fxFlex="60%">
-                <input type="text" formControlName="presenturl" placeholder="link to presentation" mdInput>
+                <input type="text" formControlName="presentUrl" placeholder="link to presentation" mdInput>
             </md-form-field>
         </div>          
     </div>
-    <button md-raised-button color="primary">Add</button>
+    <button md-raised-button color="primary" *ngIf="!editmode">Add</button>
+    <button md-raised-button color="primary" *ngIf="editmode">Save</button>
 </form>

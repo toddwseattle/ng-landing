@@ -15,6 +15,9 @@ export class EditActivityComponent implements OnInit {
   deletelist: string[]= [];
   constructor(public as: ActServiceService, public router: Router) {
     this.activities$ = as.getactivities();
+    this.activities$.subscribe(x => {
+      console.log(x);
+    });
   }
 
   ngOnInit() {

@@ -24,7 +24,18 @@ export interface IImage {
     width: number;
     altText?: string;
 }
-
+// Get ACTIVETYPE enum from string; case insensitve
+export function getTypefromString(s: string): ACTIVETYPE {
+  let result: ACTIVETYPE;
+  for (let i = 0; i < allActivities.length; i++) {
+      const a = allActivities[i];
+      if (a.toLowerCase() === s.toLowerCase() ) {
+        result = a;
+        break;
+      }
+  }
+  return result;
+}
 // this matches the general part of the add form
 export interface IActivityGeneralProps {
     activetype: ACTIVETYPE;

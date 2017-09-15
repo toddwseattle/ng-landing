@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap, Params } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ACTIVETYPE, allActivities, IActivity,
          AngelActivity, ClassActivity, DevProjectActivity,
          InvestmentActivity, NonProfitActivity, PresentationActivity,
-         IImage, ILink, IActivityGeneralProps
+         IImage, ILink, IActivityGeneralProps, getTypefromString
          } from '../common/activity';
 import { ActServiceService } from '../common/act-service.service';
 import { FirebaseObjectObservable } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/switchMap';
 import { Thenable } from 'firebase';
 
@@ -18,9 +20,9 @@ interface IAddActivity {
     general: IActivityGeneralProps;
     investment: {
       divergent: boolean;
-      companylabel: string;
-      companyurl: string;
-      crunchbaseurl: string;
+      companyLabel: string;
+      companyUrl: string;
+      crunchbaseUrl: string;
     };
     class: {
       schoolUrl: string;
@@ -30,14 +32,16 @@ interface IAddActivity {
       syllabusUrl: string;
     };
     nonprofit: {
-      orglabel: string;
-      orgurl: string;
+      orgLabel: string;
+      orgUrl: string;
     };
     devproject: {
-      giturl: string;
+      projectLabel: string;
+      projectUrl: string;
+      gitUrl: string;
     };
     present: {
-      presenturl: string;
+      presentUrl: string;
     };
   }
 
@@ -47,11 +51,13 @@ interface IAddActivity {
   templateUrl: './add-activity.component.html',
   styleUrls: ['./add-activity.component.css']
 })
-export class AddActivityComponent implements OnInit {
+export class AddActivityComponent implements OnInit, OnDestroy {
   generalForm: FormGroup;
   investmentForm: FormGroup;
   allActivities = allActivities;
   $currentActivity: Observable<IActivity> = null;
+  actsub: Subscription;
+  editmode = false;
   currentActivityType = ACTIVETYPE.Investment;
   urlpattern= /[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
@@ -63,23 +69,53 @@ export class AddActivityComponent implements OnInit {
    }
 
    ngOnInit() {
-    this.$currentActivity=this.route.paramMap.switchMap( (params: ParamMap) => {
-      if ( params.get('type')) {
-        this.currentActivityType = ACTIVETYPE[params.get('type')];
-        if ( params.get('key')) {
-         return(this.as.getActivitybyKey(this.currentActivityType, params.get('key')));
-        } else  {
-           return null;
-        }
-      } else {
-        return null;
+    this.$currentActivity = this.route.paramMap.switchMap( (params: ParamMap) => {
+      if ( getTypefromString(params.get('type')) ) {
+        const pm = params.get('type');
+        const aty = getTypefromString(pm);
+        this.currentActivityType = aty;
       }
+      return(this.as.getActivitybyKey(this.currentActivityType, params.get('key')));
     });
-      this.$currentActivity.subscribe(curact => {
-        this.generalForm.patchValue({ activetype: curact.activetype, general: this.genPropsfromActivity(curact) });
+     if (this.$currentActivity != null) {
+       this.actsub = this.$currentActivity.subscribe(curact => {
+         if (curact.$key !== 'null') {
+            this.patchgeneralForm(curact);
+            // bug bug need to patch specific values for each type
+
+            this.editmode = true;
+         }
 
       });
+    }
 
+  }
+
+  patchgeneralForm(act) {
+    this.generalForm.patchValue({ activetype: this.currentActivityType, general: this.genPropsfromActivity(act) });
+    switch (this.currentActivityType) {
+      case ACTIVETYPE.Angel:
+      case ACTIVETYPE.Investment:
+        this.patchInvestment(act);
+        break;
+      case ACTIVETYPE.Class:
+        this.patchClass(act);
+        break;
+      case ACTIVETYPE.DevProject:
+        this.patchDev(act);
+        break;
+      case ACTIVETYPE.NonProfit
+        this.patchNonProfit(act);
+        break;
+      case ACTIVETYPE.Presentation:
+        this.patchPrez(act);
+      default:
+        console.log('bad activity on form load fixup');
+        break;
+    }
+  }
+  ngOnDestroy() {
+    this.actsub.unsubscribe();
   }
 
   genPropsfromActivity(a: IActivity): IActivityGeneralProps {
@@ -115,22 +151,69 @@ export class AddActivityComponent implements OnInit {
   getImagefromIAddActivity(aa: IAddActivity): IImage {
     return({ Url: null, height: 0, width: 0 }); // bug bug this is temporary until there is an image chooser)
   }
-  createAndsaveDev(value: IAddActivity, valid: boolean) {
-    console.log('SaveDev not implemented');
-    console.log('value : ' + value + 'valid:' + valid);
+
+  updateEditfromCreatepromise(a: IActivity) {
+    if (a.$key) {
+      this.$currentActivity = this.as.getActivitybyKey(a.activetype, a.$key);
     }
+  }
+  createOrSave(a: IActivity): void {
+    if (!this.editmode) {
+      this.as.createActivity(a).then(av => this.updateEditfromCreatepromise(av));
+     } else {
+       this.as.updateActivity(a).then(av => this.updateEditfromCreatepromise(av));
+     }
+  }
+  createAndsaveDev(value: IAddActivity, valid: boolean) {
+    const image: IImage = this.getImagefromIAddActivity(value);
+    const orglink: ILink = {label: value.devproject.projectLabel,
+                           Url: value.devproject.projectUrl };
+    value.general.image = image;
+    const dev = new DevProjectActivity(value.general, orglink);
+    dev.repository = {label: value.devproject.gitUrl, Url: value.devproject.gitUrl};
+    this.createOrSave(dev);
+  }
+
+  patchDev(dev: DevProjectActivity) {
+    this.generalForm.patchValue({ devproject:
+             {projectLabel: dev.organization.label, projectUrl: dev.organization.Url, gitUrl: dev.repository.Url } });
+  }
 
   createAndsaveNonProfit(value: IAddActivity, valid: boolean) {
-      console.log('Save NonProfit not implemented');
-      console.log('value : ' + value + 'valid:' + valid);
+      const image: IImage = this.getImagefromIAddActivity(value);
+      const orglink: ILink = {label: value.nonprofit.orgLabel,
+                             Url: value.nonprofit.orgUrl };
+      value.general.image = image;
+      const np = new NonProfitActivity(value.general, orglink);
+      this.createOrSave(np);
+    }
+
+  patchNonProfit(np: NonProfitActivity) {
+      this.generalForm.patchValue({ nonprofit:
+               {orgLabel: np.organization.label, orgUrl: np.organization.Url} });
     }
   createAndsavePresent(value: IAddActivity, valid: boolean) {
-    console.log('Save Present not implemented');
-    console.log('value : ' + value + 'valid:' + valid);
+    const image: IImage = this.getImagefromIAddActivity(value);
+    const orglink: ILink = {label: null,
+                           Url: null };
+    value.general.image = image;
+    const prez = new PresentationActivity(value.general, orglink);
+    prez.presentation = {label: value.present.presentUrl, Url: value.present.presentUrl};
+    this.createOrSave(prez);
     }
+  patchPrez(prez: PresentationActivity) {
+    this.generalForm.patchValue({ presentation:
+      {orgLabel: prez.presentation, orgUrl: prez.presentation} });
+  }
   createAndsaveInvest(value: IAddActivity, valid: boolean) {
-    console.log('Save Investment not implemented');
-    console.log('value : ' + value + 'valid:' + valid);
+    const image: IImage = this.getImagefromIAddActivity(value);
+    const orglink: ILink = {label: value.investment.companyLabel,
+                           Url: value.investment.companyUrl };
+    value.general.image = image;
+    const vehicle = value.investment.divergent ? 'Divergent' : 'Angel';
+    const inv = new InvestmentActivity(value.general, orglink, vehicle);
+    inv.crunchbaseUrl = value.investment.crunchbaseUrl;
+    this.createOrSave(inv);
   }
 
   createAndsaveClass(value: IAddActivity, valid: boolean)  {
@@ -144,11 +227,7 @@ export class AddActivityComponent implements OnInit {
                       label: value.class.departmentLabel,
                       Url: value.class.departmentUrl
                       };
-     this.as.createClass(cls).then(a => {
-        if (a.key) {
-          this.$currentActivity = this.as.getClass(a.key);
-        }
-     });
+    this.createOrSave(cls);
     }
 
   createGeneralform() {
@@ -164,9 +243,9 @@ export class AddActivityComponent implements OnInit {
         image: ['', ] }),
       investment: this.fb.group({
         divergent: [true, Validators.required],
-        companylabel: ['', Validators.required],
-        companyurl: ['', [Validators.required, Validators.pattern(this.urlpattern)]],
-        crunchbaseurl: ['http://www.crunchbase.com/', Validators.pattern(this.urlpattern) ]
+        companyLabel: ['', Validators.required],
+        companyUrl: ['', [Validators.required, Validators.pattern(this.urlpattern)]],
+        crunchbaseUrl: ['http://www.crunchbase.com/', Validators.pattern(this.urlpattern) ]
       }),
       class: this.fb.group({
         schoolUrl: ['', [Validators.required, Validators.pattern(this.urlpattern)]],
@@ -176,14 +255,16 @@ export class AddActivityComponent implements OnInit {
         syllabusUrl: ['', Validators.pattern(this.urlpattern)],
       }),
       nonprofit: this.fb.group({
-        orglabel: ['', Validators.required],
-        orgurl: ['', [Validators.required, Validators.pattern(this.urlpattern)]]
+        orgLabel: ['', Validators.required],
+        orgUrl: ['', [Validators.required, Validators.pattern(this.urlpattern)]]
       }),
       devproject: this.fb.group({
-        giturl: ['http://www.github.com/<username>/<repo>', [Validators.required, Validators.pattern(this.urlpattern)]]
+        projectLabel: ['', ],
+        projectUrl: ['', ],
+        gitUrl: ['http://www.github.com/<username>/<repo>', [Validators.required, Validators.pattern(this.urlpattern)]]
       }),
       present: this.fb.group({
-        presenturl: ['', [Validators.required, Validators.pattern(this.urlpattern)]]
+        presentUrl: ['', [Validators.required, Validators.pattern(this.urlpattern)]]
       })
     });
    }

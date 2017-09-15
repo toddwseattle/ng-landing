@@ -21,6 +21,14 @@ export const appRoutes: Routes = [
         component: AddActivityComponent
     },
     {
+        path: 'activity/:type',
+        component: AddActivityComponent
+    },
+    {
+        path: 'activity',
+        component: AddActivityComponent
+    },
+    {
         path: '',
         redirectTo: '/home',
         pathMatch: 'full'
