@@ -104,11 +104,12 @@ export class AddActivityComponent implements OnInit, OnDestroy {
       case ACTIVETYPE.DevProject:
         this.patchDev(act);
         break;
-      case ACTIVETYPE.NonProfit
+      case ACTIVETYPE.NonProfit:
         this.patchNonProfit(act);
         break;
       case ACTIVETYPE.Presentation:
         this.patchPrez(act);
+        break;
       default:
         console.log('bad activity on form load fixup');
         break;
@@ -216,6 +217,17 @@ export class AddActivityComponent implements OnInit, OnDestroy {
     this.createOrSave(inv);
   }
 
+  patchInvestment(act: IActivity) {
+    if (act.activetype === ACTIVETYPE.Investment) {
+      const inv = act as InvestmentActivity;
+      this.generalForm.patchValue({ investment:
+        {divergent: (inv.vehicle === 'Divergent'),
+         companyLabel: inv.organization.label,
+         companyUrl: inv.organization.Url,
+         crunchbaseUrl: inv.crunchbaseUrl}});
+    }
+  }
+
   createAndsaveClass(value: IAddActivity, valid: boolean)  {
     const classimage: IImage = this.getImagefromIAddActivity(value);
     const orglink: ILink = {label: value.class.schoolLabel,
@@ -228,6 +240,12 @@ export class AddActivityComponent implements OnInit, OnDestroy {
                       Url: value.class.departmentUrl
                       };
     this.createOrSave(cls);
+    }
+
+    patchClass(cl: ClassActivity) {
+      this.generalForm.patchValue( { class: {syllabusUrl: cl.syllabus.Url,
+                syllabusLabel: cl.syllabus.label,
+                departmentLabel: cl.department.label, departmentUrl: cl.department.Url}} );
     }
 
   createGeneralform() {
