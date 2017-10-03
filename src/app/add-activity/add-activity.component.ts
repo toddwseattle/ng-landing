@@ -53,7 +53,6 @@ interface IAddActivity {
 })
 export class AddActivityComponent implements OnInit, OnDestroy {
   generalForm: FormGroup;
-  investmentForm: FormGroup;
   allActivities = allActivities;
   $currentActivity: Observable<IActivity> = null;
   actsub: Subscription;
@@ -82,7 +81,7 @@ export class AddActivityComponent implements OnInit, OnDestroy {
          if (curact.$key !== 'null') {
             this.patchgeneralForm(curact);
             // bug bug need to patch specific values for each type
-
+            this.patchactivitySpecific(curact);
             this.editmode = true;
          }
 
@@ -90,30 +89,58 @@ export class AddActivityComponent implements OnInit, OnDestroy {
     }
 
   }
+  patchactivitySpecific(a: IActivity) {
+    switch (a.activetype) {
+     // case ACTIVETYPE.Angel:
+      case ACTIVETYPE.Investment:
+          this.patchInvestment(a);
+          break;
+      case ACTIVETYPE.Class:
+          this.patchClass(a as ClassActivity);
+          break;
+      case ACTIVETYPE.DevProject:
+          this.patchDev(a as DevProjectActivity);
+          break;
+      case ACTIVETYPE.NonProfit:
+          this.patchNonProfit(a as NonProfitActivity);
+          break;
+      case ACTIVETYPE.Presentation:
+          this.patchPrez(a as PresentationActivity);
+          break;
+      default:
+        break;
+    }
+  }
+ /*  patchClass(a: IActivity) {
+    const c = a as ClassActivity;
+    this.generalForm.patchValue({class: {schoolUrl: c.organization.Url, schoolLabel: c.organization.label,
+                                    departmentUrl: c.department.Url, departmentLabel: c.department.label, syllabusUrl: c.syllabus}});
+  }
+  patchDev(a: IActivity) {
+    const d = d as DevProjectActivity;
+    this.generalForm.patchValue({devproject:{projectLabel: d.organization.Url, projectUrl: d.organization.label,
+      gitUrl: d.github}});
+  }
+  patchInvestmentOrAngel(i: IActivity) {
+    let divinv: InvestmentActivity = null;
+    let anginv: AngelActivity = null;
+    if(i.activetype == ACTIVETYPE.Angel) {
+      this.generalForm.patchValue({investment:{divergent: false}});
+      anginv = i as AngelActivity;
+      this.generalForm.patchValue({investment:{companyLabel: i.organization.label, companyUrl: i.organization.Url,
+                                   crunchbaseUrl: anginv.crunchbaseUrl }})
+    } else if(i.activetype == ACTIVETYPE.Investment) {
+      this.generalForm.patchValue({investment: {divergent: true}});
+      divinv = i as InvestmentActivity;
+      this.generalForm.patchValue({investment:{companyLabel: i.organization.label, companyUrl: i.organization.Url,
+                                   crunchbaseUrl: divinv.crunchbaseUrl }});
+    }
+  }
+   */
 
   patchgeneralForm(act) {
     this.generalForm.patchValue({ activetype: this.currentActivityType, general: this.genPropsfromActivity(act) });
-    switch (this.currentActivityType) {
-      case ACTIVETYPE.Angel:
-      case ACTIVETYPE.Investment:
-        this.patchInvestment(act);
-        break;
-      case ACTIVETYPE.Class:
-        this.patchClass(act);
-        break;
-      case ACTIVETYPE.DevProject:
-        this.patchDev(act);
-        break;
-      case ACTIVETYPE.NonProfit:
-        this.patchNonProfit(act);
-        break;
-      case ACTIVETYPE.Presentation:
-        this.patchPrez(act);
-        break;
-      default:
-        console.log('bad activity on form load fixup');
-        break;
-    }
+
   }
   ngOnDestroy() {
     this.actsub.unsubscribe();
@@ -221,10 +248,14 @@ export class AddActivityComponent implements OnInit, OnDestroy {
     if (act.activetype === ACTIVETYPE.Investment) {
       const inv = act as InvestmentActivity;
       this.generalForm.patchValue({ investment:
-        {divergent: (inv.vehicle === 'Divergent'),
+        {divergent: (inv.vehicle.slice(0,9) === 'Divergent'),
          companyLabel: inv.organization.label,
          companyUrl: inv.organization.Url,
          crunchbaseUrl: inv.crunchbaseUrl}});
+    } else if(act.activetype == ACTIVETYPE.Angel) {
+      const anginv = act as AngelActivity;
+      this.generalForm.patchValue({investment:{companyLabel: anginv.organization.label, companyUrl: anginv.organization.Url,
+        crunchbaseUrl: anginv.crunchbaseUrl, divergent:false }});
     }
   }
 

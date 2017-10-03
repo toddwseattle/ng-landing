@@ -63,6 +63,9 @@ export class ActServiceService {
     if (!fixed.dateStart) {
       fixed.dateStart = 0;
     }
+    if (tofix.activetype.toString() === 'investment') {
+      fixed.activetype = ACTIVETYPE.Investment;
+    }
     return fixed;
   }
   public getActivitybyKey(qa: ACTIVETYPE, key: string): Observable<IActivity> {
