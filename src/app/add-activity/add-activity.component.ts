@@ -123,8 +123,8 @@ export class AddActivityComponent implements OnInit, OnDestroy {
     return ({
                activetype: a.activetype,
                name: a.name,
-               start: (new Date(a.dateStart).toDateString()),
-               end: a.dateEnd > 0 ? (new Date(a.dateEnd).toDateString()) : '',
+               start: (new Date(a.dateStart).toISOString().slice(0, 10)),
+               end: a.dateEnd > 0 ? (new Date(a.dateEnd).toISOString().slice(0, 10)) : '',
                hasend: a.dateEnd > 0,
                hidden: a.hidden,
                description: a.description,

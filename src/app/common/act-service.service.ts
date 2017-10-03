@@ -55,9 +55,19 @@ export class ActServiceService {
     // else if (activities.indexOf(ACTIVETYPE.Investment) >= 0) {
     //   return this.$investments;
     }
-  public getActivitybyKey(qa: ACTIVETYPE, key: string): FirebaseObjectObservable<IActivity> {
+  private fixActivity(tofix: IActivity): IActivity {
+    const fixed = tofix;
+    if (!fixed.hidden) {
+      fixed.hidden = false;
+    }
+    if (!fixed.dateStart) {
+      fixed.dateStart = 0;
+    }
+    return fixed;
+  }
+  public getActivitybyKey(qa: ACTIVETYPE, key: string): Observable<IActivity> {
     if (qa && key) {
-    return(this.db.object(this.activepath(qa) + '/' + key));
+    return(this.db.object(this.activepath(qa) + '/' + key).switchMap(activity => Observable.of(this.fixActivity(activity))));
     } else {
       console.log('getActivitybyKey invalid params activity:%s key:%s', qa, key);
       return(Observable.empty<IActivity>() as FirebaseObjectObservable<IActivity>);
