@@ -111,32 +111,6 @@ export class AddActivityComponent implements OnInit, OnDestroy {
         break;
     }
   }
- /*  patchClass(a: IActivity) {
-    const c = a as ClassActivity;
-    this.generalForm.patchValue({class: {schoolUrl: c.organization.Url, schoolLabel: c.organization.label,
-                                    departmentUrl: c.department.Url, departmentLabel: c.department.label, syllabusUrl: c.syllabus}});
-  }
-  patchDev(a: IActivity) {
-    const d = d as DevProjectActivity;
-    this.generalForm.patchValue({devproject:{projectLabel: d.organization.Url, projectUrl: d.organization.label,
-      gitUrl: d.github}});
-  }
-  patchInvestmentOrAngel(i: IActivity) {
-    let divinv: InvestmentActivity = null;
-    let anginv: AngelActivity = null;
-    if(i.activetype == ACTIVETYPE.Angel) {
-      this.generalForm.patchValue({investment:{divergent: false}});
-      anginv = i as AngelActivity;
-      this.generalForm.patchValue({investment:{companyLabel: i.organization.label, companyUrl: i.organization.Url,
-                                   crunchbaseUrl: anginv.crunchbaseUrl }})
-    } else if(i.activetype == ACTIVETYPE.Investment) {
-      this.generalForm.patchValue({investment: {divergent: true}});
-      divinv = i as InvestmentActivity;
-      this.generalForm.patchValue({investment:{companyLabel: i.organization.label, companyUrl: i.organization.Url,
-                                   crunchbaseUrl: divinv.crunchbaseUrl }});
-    }
-  }
-   */
 
   patchgeneralForm(act) {
     this.generalForm.patchValue({ activetype: this.currentActivityType, general: this.genPropsfromActivity(act) });
@@ -248,14 +222,14 @@ export class AddActivityComponent implements OnInit, OnDestroy {
     if (act.activetype === ACTIVETYPE.Investment) {
       const inv = act as InvestmentActivity;
       this.generalForm.patchValue({ investment:
-        {divergent: (inv.vehicle.slice(0,9) === 'Divergent'),
+        {divergent: (inv.vehicle.slice(0, 9) === 'Divergent'),
          companyLabel: inv.organization.label,
          companyUrl: inv.organization.Url,
          crunchbaseUrl: inv.crunchbaseUrl}});
-    } else if(act.activetype == ACTIVETYPE.Angel) {
+    } else if (act.activetype === ACTIVETYPE.Angel) {
       const anginv = act as AngelActivity;
-      this.generalForm.patchValue({investment:{companyLabel: anginv.organization.label, companyUrl: anginv.organization.Url,
-        crunchbaseUrl: anginv.crunchbaseUrl, divergent:false }});
+      this.generalForm.patchValue({investment: {companyLabel: anginv.organization.label, companyUrl: anginv.organization.Url,
+        crunchbaseUrl: anginv.crunchbaseUrl, divergent: false }});
     }
   }
 
