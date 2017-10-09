@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap, Params } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { InputFileComponent } from '../input-file/input-file.component';
 import { ACTIVETYPE, allActivities, IActivity,
          AngelActivity, ClassActivity, DevProjectActivity,
          InvestmentActivity, NonProfitActivity, PresentationActivity,
@@ -12,7 +13,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/switchMap';
-import { Thenable } from 'firebase';
+import * as firebase from 'firebase';
 
 // interface to mimic shape of the form
 interface IAddActivity {
@@ -53,15 +54,16 @@ interface IAddActivity {
 })
 export class AddActivityComponent implements OnInit, OnDestroy {
   generalForm: FormGroup;
+  imagePlaceholder= 'click to set';
   allActivities = allActivities;
   $currentActivity: Observable<IActivity> = null;
   actsub: Subscription;
   editmode = false;
+  currentact = null;
   currentActivityType = ACTIVETYPE.Investment;
   urlpattern= /[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
-
-
+  private _GENERICIMAGE: IImage = {Url: 'assets/images/480px-Image-x-generic-2.svg', altText: 'Generic Image', height: 480, width: 480 };
   constructor(private fb: FormBuilder, public router: Router, public route: ActivatedRoute, public as: ActServiceService) {
 
     this.createGeneralform();
@@ -80,9 +82,12 @@ export class AddActivityComponent implements OnInit, OnDestroy {
        this.actsub = this.$currentActivity.subscribe(curact => {
          if (curact.$key !== 'null') {
             this.patchgeneralForm(curact);
-            // bug bug need to patch specific values for each type
+            if ((curact.image != null) && (curact.image.Url)) {
+              this.imagePlaceholder = curact.image.Url;
+            }
             this.patchactivitySpecific(curact);
             this.editmode = true;
+            this.currentact = curact;
          }
 
       });
@@ -129,7 +134,8 @@ export class AddActivityComponent implements OnInit, OnDestroy {
                hasend: a.dateEnd > 0,
                hidden: a.hidden,
                description: a.description,
-               image: a.image
+               image: a.image,
+               uploadfiles: null
              });
   }
   saveAndclose({value, valid}: {value: IAddActivity, valid: boolean}) {
@@ -150,30 +156,59 @@ export class AddActivityComponent implements OnInit, OnDestroy {
     }
   }
 
-  getImagefromIAddActivity(aa: IAddActivity): IImage {
-    return({ Url: null, height: 0, width: 0 }); // bug bug this is temporary until there is an image chooser)
-  }
-
-  updateEditfromCreatepromise(a: IActivity) {
+updateEditfromCreatepromise(a: IActivity) {
     if (a.$key) {
       this.$currentActivity = this.as.getActivitybyKey(a.activetype, a.$key);
     }
   }
-  createOrSave(a: IActivity): void {
-    if (!this.editmode) {
-      this.as.createActivity(a).then(av => this.updateEditfromCreatepromise(av));
-     } else {
-       this.as.updateActivity(a).then(av => this.updateEditfromCreatepromise(av));
-     }
+
+updateOrCreate(a: IActivity) {
+  if (!this.editmode) {
+    this.as.createActivity(a).then(av => this.updateEditfromCreatepromise(av))
+    .catch(e => {
+      console.log('activity creatin error %s', e.message);
+    });
+  } else {
+    a.key = this.currentact.key;
+    a.$key = this.currentact.$key;
+    a.$ref = this.currentact.$ref;
+    this.as.updateActivity(a).then(av => this.updateEditfromCreatepromise(av))
+    .catch(e => {
+      console.log('activity update error %s: %s', e.name, e.message);
+    });
+  }
+}
+/*  pseudo code
+          did the user pick an image to upload?
+        if so try to upload the image then
+           fixup the activity object with new uploaded image url info
+           then createActivity and then update the edit from the promise
+       catch a failure on upload and display a message ?to try again?
+      otherwise, if no image to upload
+        then createActivity and then update the edit from the promise
+      catch a failure on updating the edit and display a message ?to try again?
+
+  */
+uploadImageAndCreateOrSaveActivity(a: IActivity, v: IAddActivity): void {
+    if (v.general.uploadfiles && (v.general.uploadfiles.length > 0)) {
+      this.as.uploadImagefile(v.general.uploadfiles[0]).then(snap => {
+        console.log(snap);
+        a.image.Url = snap.downloadURL;
+        a.image.altText = v.general.uploadfiles[0].name;
+        this.updateOrCreate(a);
+      }).catch(e => {
+        console.log('upload error:' + e);
+      });
+    } else {
+      this.updateOrCreate(a);
+    }
   }
   createAndsaveDev(value: IAddActivity, valid: boolean) {
-    const image: IImage = this.getImagefromIAddActivity(value);
     const orglink: ILink = {label: value.devproject.projectLabel,
                            Url: value.devproject.projectUrl };
-    value.general.image = image;
     const dev = new DevProjectActivity(value.general, orglink);
     dev.repository = {label: value.devproject.gitUrl, Url: value.devproject.gitUrl};
-    this.createOrSave(dev);
+    this.uploadImageAndCreateOrSaveActivity(dev, value);
   }
 
   patchDev(dev: DevProjectActivity) {
@@ -182,12 +217,11 @@ export class AddActivityComponent implements OnInit, OnDestroy {
   }
 
   createAndsaveNonProfit(value: IAddActivity, valid: boolean) {
-      const image: IImage = this.getImagefromIAddActivity(value);
+
       const orglink: ILink = {label: value.nonprofit.orgLabel,
                              Url: value.nonprofit.orgUrl };
-      value.general.image = image;
       const np = new NonProfitActivity(value.general, orglink);
-      this.createOrSave(np);
+      this.uploadImageAndCreateOrSaveActivity(np, value);
     }
 
   patchNonProfit(np: NonProfitActivity) {
@@ -195,27 +229,23 @@ export class AddActivityComponent implements OnInit, OnDestroy {
                {orgLabel: np.organization.label, orgUrl: np.organization.Url} });
     }
   createAndsavePresent(value: IAddActivity, valid: boolean) {
-    const image: IImage = this.getImagefromIAddActivity(value);
     const orglink: ILink = {label: null,
                            Url: null };
-    value.general.image = image;
     const prez = new PresentationActivity(value.general, orglink);
     prez.presentation = {label: value.present.presentUrl, Url: value.present.presentUrl};
-    this.createOrSave(prez);
+    this.uploadImageAndCreateOrSaveActivity(prez, value);
     }
   patchPrez(prez: PresentationActivity) {
     this.generalForm.patchValue({ presentation:
       {orgLabel: prez.presentation, orgUrl: prez.presentation} });
   }
   createAndsaveInvest(value: IAddActivity, valid: boolean) {
-    const image: IImage = this.getImagefromIAddActivity(value);
     const orglink: ILink = {label: value.investment.companyLabel,
                            Url: value.investment.companyUrl };
-    value.general.image = image;
     const vehicle = value.investment.divergent ? 'Divergent' : 'Angel';
     const inv = new InvestmentActivity(value.general, orglink, vehicle);
     inv.crunchbaseUrl = value.investment.crunchbaseUrl;
-    this.createOrSave(inv);
+    this.uploadImageAndCreateOrSaveActivity(inv, value);
   }
 
   patchInvestment(act: IActivity) {
@@ -234,17 +264,15 @@ export class AddActivityComponent implements OnInit, OnDestroy {
   }
 
   createAndsaveClass(value: IAddActivity, valid: boolean)  {
-    const classimage: IImage = this.getImagefromIAddActivity(value);
     const orglink: ILink = {label: value.class.schoolLabel,
                            Url: value.class.schoolUrl };
-    value.general.image = classimage;
     const cls = new ClassActivity(value.general, orglink);
     cls.syllabus = {label: value.class.syllabusUrl, Url: value.class.syllabusUrl};
     cls.department = {
                       label: value.class.departmentLabel,
                       Url: value.class.departmentUrl
                       };
-    this.createOrSave(cls);
+    this.uploadImageAndCreateOrSaveActivity(cls, value);
     }
 
     patchClass(cl: ClassActivity) {
@@ -263,7 +291,8 @@ export class AddActivityComponent implements OnInit, OnDestroy {
         end: [(new Date(Date.now())).toISOString().slice(0, 10), ],
         description: ['', ],
         hidden: [false, ],
-        image: ['', ] }),
+        image: [this._GENERICIMAGE, ],
+        uploadfiles: [{ value: undefined, disabled: false }, ] }),
       investment: this.fb.group({
         divergent: [true, Validators.required],
         companyLabel: ['', Validators.required],
@@ -291,8 +320,6 @@ export class AddActivityComponent implements OnInit, OnDestroy {
       })
     });
    }
-
-
   isInvestment(a: ACTIVETYPE) {
     return((a === ACTIVETYPE.Investment) || (a === ACTIVETYPE.Angel));
   }

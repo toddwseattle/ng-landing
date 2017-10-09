@@ -43,6 +43,7 @@ export interface IActivityGeneralProps {
     description: string;
     hidden: boolean;
     image: IImage;
+    uploadfiles: File[];
     hasend: boolean;
     start: string;
     end: string;
@@ -61,6 +62,7 @@ export interface IActivity {
   hidden: boolean;
   $ref?: any;
   $key?: any;
+  key?: any;
 }
 
 export class Activity implements IActivity {
@@ -75,6 +77,7 @@ export class Activity implements IActivity {
   public dateEnd: number;
   public $ref?: any;
   public $key?: any;
+  public key?: any;
 
   constructor(gen: IActivityGeneralProps, public organization: ILink) {
     this.activetype = gen.activetype;

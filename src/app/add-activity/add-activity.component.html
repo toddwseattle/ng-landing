@@ -17,6 +17,10 @@
             <md-form-field fxFlex="55%">
                 <input type="text" formControlName="name" placeholder="Enter Name" mdInput >
             </md-form-field> 
+            <div fxFlex="40%" *ngIf="($currentActivity | async)?.image?.Url!=null">
+                <img [src]="($currentActivity | async).image.Url" [alt]="($currentActivity | async).image.altText">
+            </div>
+            <app-input-file formControlName="uploadfiles" class="input-container" placeholder="Image path" [valuePlaceholder]="imagePlaceholder" fxFlex="40%"></app-input-file>
             <md-form-field fxFlex="100%">
                 <textarea mdInput placeholder="description" formControlName="description" ></textarea>
             </md-form-field>

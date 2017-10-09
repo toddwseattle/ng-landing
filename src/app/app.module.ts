@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 // material design and FxFlex
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdToolbarModule, MdInputModule, MdCheckboxModule, MdSidenavModule, MdCardModule,
-         MdButtonModule, MdSelectModule, MdListModule, MdGridListModule } from '@angular/material';
+         MdButtonModule, MdSelectModule, MdListModule, MdGridListModule, MdIconModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -26,6 +26,8 @@ import { ActivityGridComponent } from './activity-grid/activity-grid.component';
 import { ActServiceService } from './common/act-service.service';
 import { AddActivityComponent } from './add-activity/add-activity.component';
 import { EditActivityComponent } from './edit-activity/edit-activity.component';
+import { InputFileComponent } from './input-file/input-file.component';
+import { ByteFormatPipe } from './byte-format.pipe';
 
 
 
@@ -38,7 +40,9 @@ import { EditActivityComponent } from './edit-activity/edit-activity.component';
     SocialNetsComponent,
     ActivityGridComponent,
     AddActivityComponent,
-    EditActivityComponent
+    EditActivityComponent,
+    InputFileComponent,
+    ByteFormatPipe,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +57,7 @@ import { EditActivityComponent } from './edit-activity/edit-activity.component';
     MdCheckboxModule,
     MdInputModule,
     MdSelectModule,
+    MdIconModule,
     FormsModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase, 'ng-landing'),
