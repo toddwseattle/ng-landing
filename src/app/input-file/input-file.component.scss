@@ -1,0 +1,130 @@
+:host {
+    position: relative;
+    display: inline-block;
+    text-align: left;
+}
+$paddingLeft: 16px;
+$focusColor: green;
+
+button {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    vertical-align: text-bottom;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 0;
+
+    md-icon {
+        max-width: 24px;
+        max-height: 24px;
+    }
+}
+
+input {
+	width: 0px;
+	height: 0px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.filename {
+    cursor: pointer;
+    display: inline-block;
+    padding-left: $paddingLeft;
+    width: calc(100% - 25px - #{$paddingLeft});
+}
+
+.mat-input-underline {
+    top: 67%;
+}
+
+.mat-input-wrapper {
+    padding: 0;
+}
+
+.custom-focused .mat-input-placeholder {
+    color: $focusColor;
+}
+.custom-focused .mat-input-underline {
+    background-color: $focusColor;
+}
+
+// angular material override (WEIRD NECESSITY)
+
+.mat-input-wrapper {
+    position: relative;
+    height: 57px;
+}
+
+.mat-input-infix {
+    display: block;
+    position: relative;
+    flex: auto;
+}
+
+.mat-input-element {
+    font: inherit;
+    background: 0 0;
+    border: none;
+    outline: 0;
+    vertical-align: bottom;
+}
+
+.mat-input-placeholder-wrapper {
+    position: absolute;
+    left: 0;
+    box-sizing: content-box;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.mat-input-placeholder.mat-float:not(.mat-empty) {
+    display: block;
+}
+
+.mat-input-placeholder {
+    position: absolute;
+    left: 0;
+    font: inherit;
+    pointer-events: none;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    transform: perspective(100px);
+    -ms-transform: none;
+    transform-origin: 0 0;
+    transition: transform .4s cubic-bezier(.25,.8,.25,1),color .4s cubic-bezier(.25,.8,.25,1),width .4s cubic-bezier(.25,.8,.25,1);
+    display: none;
+}
+
+.mat-input-underline {
+    position: absolute;
+    height: 1px;
+    width: 100%;
+}
+
+.mat-input-underline .mat-input-ripple {
+    position: absolute;
+    height: 2px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform-origin: 50%;
+    transform: scaleX(.5);
+    visibility: hidden;
+    transition: background-color .3s cubic-bezier(.55,0,.55,.2);
+}
+
+.mat-input-flex {
+    display: inline-flex;
+    align-items: baseline;
+    width: 100%;
+}

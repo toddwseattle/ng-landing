@@ -1,0 +1,25 @@
+<div class="mat-input-wrapper" [class.mat-input-invalid]="required && !hasFiles" [class.custom-focused]="focused">
+  
+    <div class="mat-input-flex">
+      <div class="mat-input-infix">
+  
+        <input #input id="md-input-file" type="file" (change)="onChange($event)" (click)="onTouched($event)" (focusin)="onFocusToggle()"
+          (focusout)="onFocusToggle()" [attr.multiple]="multiple? '' : null">
+        <span class="mat-button filename" (click)="open()">{{fileNames}}</span>
+        <button md-button type="button" mdSuffix (click)="open()" (focusin)="onFocusToggle()" (focusout)="onFocusToggle()"><md-icon>image</md-icon></button>
+  
+        <span class="mat-input-placeholder-wrapper">
+          <label for="md-input-file" class="mat-caption" [class.mat-empty]="false">{{placeholder}}
+            <span class="mat-placeholder-required" *ngIf="required">*</span>
+        </label>
+        </span>
+  
+      </div>
+    </div>
+  
+    <div class="mat-input-underline" [class.mat-disabled]="disabled">
+      <span class="mat-input-ripple"></span>
+    </div>
+  
+    <div class="mat-input-flex"></div>
+  </div>
