@@ -107,7 +107,10 @@ export class ActServiceService {
   }
 
   public updateActivity(a: IActivity): firebase.Thenable<any> {
-    return(this.db.object(this.activepath(a.activetype) + '/' + a.key).set(a));
+    const actpath = this.activepath(a.activetype) + '/' + a.key;
+    delete a['$key'];
+    const actobj = this.db.object(actpath);
+    return(actobj.update(a));
   }
   public createActivity(a: IActivity): firebase.Thenable<any> {
     return(this.db.list(this.activepath(a.activetype)).push(a));

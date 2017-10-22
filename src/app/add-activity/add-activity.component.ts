@@ -170,8 +170,8 @@ updateOrCreate(a: IActivity) {
     });
   } else {
     a.key = this.currentact.key;
-    a.$key = this.currentact.$key;
-    a.$ref = this.currentact.$ref;
+   // a.$key = this.currentact.$key;
+  //  a.$ref = this.currentact.$ref;
     this.as.updateActivity(a).then(av => this.updateEditfromCreatepromise(av))
     .catch(e => {
       console.log('activity update error %s: %s', e.name, e.message);
