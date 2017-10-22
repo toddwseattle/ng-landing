@@ -52,6 +52,7 @@ interface IAddActivity {
   templateUrl: './add-activity.component.html',
   styleUrls: ['./add-activity.component.css']
 })
+
 export class AddActivityComponent implements OnInit, OnDestroy {
   generalForm: FormGroup;
   imagePlaceholder= 'click to set';
@@ -64,36 +65,36 @@ export class AddActivityComponent implements OnInit, OnDestroy {
   urlpattern= /[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
   private _GENERICIMAGE: IImage = {Url: 'assets/images/480px-Image-x-generic-2.svg', altText: 'Generic Image', height: 480, width: 480 };
+
   constructor(private fb: FormBuilder, public router: Router, public route: ActivatedRoute, public as: ActServiceService) {
 
     this.createGeneralform();
    }
 
    ngOnInit() {
-    this.$currentActivity = this.route.paramMap.switchMap( (params: ParamMap) => {
-      if ( getTypefromString(params.get('type')) ) {
-        const pm = params.get('type');
-        const aty = getTypefromString(pm);
-        this.currentActivityType = aty;
-      }
-      return(this.as.getActivitybyKey(this.currentActivityType, params.get('key')));
-    });
-     if (this.$currentActivity != null) {
-       this.actsub = this.$currentActivity.subscribe(curact => {
-         if (curact.$key !== 'null') {
-            this.patchgeneralForm(curact);
-            if ((curact.image != null) && (curact.image.Url)) {
-              this.imagePlaceholder = curact.image.Url;
-            }
-            this.patchactivitySpecific(curact);
-            this.editmode = true;
-            this.currentact = curact;
-         }
-
-      });
-    }
-
+      this.$currentActivity = this.route.paramMap.switchMap( (params: ParamMap) => {
+        if (params.has('type')) {
+          const pm = params.get('type');
+          const aty = getTypefromString(pm);
+          this.currentActivityType = aty;
+          return(this.as.getActivitybyKey(this.currentActivityType, params.get('key')));
+        } else  {
+          return (Observable.of(null));
+        }
+        });
+        this.actsub = this.$currentActivity.subscribe(curact => {
+          if (curact && (curact.$key !== 'null')) {
+              this.patchgeneralForm(curact);
+              if ((curact.image != null) && (curact.image.Url)) {
+                this.imagePlaceholder = curact.image.Url;
+              }
+              this.patchactivitySpecific(curact);
+              this.editmode = true;
+              this.currentact = curact;
+          }
+        });
   }
+
   patchactivitySpecific(a: IActivity) {
     switch (a.activetype) {
      // case ACTIVETYPE.Angel:

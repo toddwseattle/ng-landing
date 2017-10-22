@@ -89,15 +89,7 @@ export class ActServiceService {
       return(Observable.empty<IActivity>() as FirebaseObjectObservable<IActivity>);
     }
   }
- /*  public getActivitybyName(qa: ACTIVETYPE, qname: string): FirebaseObjectObservable<IActivity> {
-    const fbquery = {query: {orderByChild: 'name', equalTo: qname, limitToFirst: 1 }};
-    return this.db.list(this.activepath(qa), fbquery).flatMap(
-       (activ: IActivity[]) => {
-           const getact = activ[0];
-           return(this.db.object(acitvepath(getact) + '/' + getact.$ref));
-        }
-      });
-  } */
+
 
   public uploadImagefile(f: File): firebase.Thenable<any> {
     const rootRef = this._fb.storage().ref();

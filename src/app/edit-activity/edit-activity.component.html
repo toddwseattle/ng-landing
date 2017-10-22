@@ -18,7 +18,6 @@
         <div class="col-20"><a [routerLink]="'/activity/'+activity.activetype+'/'+ activity.$key">{{activity.name}}</a></div>
         <div class="col-40">{{activity.description.substr(0,30)}}...</div>
         <div class="col-10">{{activity.activetype}}</div>
-       <button type="button" (click)="activityClick(activity)">Click me</button>
     </md-list-item>
 </md-nav-list>
 </div>
