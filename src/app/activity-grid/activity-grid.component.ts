@@ -1,4 +1,7 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
+import { MediaChange, ObservableMedia } from '@angular/flex-layout';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { IActivity, Activity, InvestmentActivity, IImage } from '../common/activity';
 import { ActServiceService } from '../common/act-service.service';
 interface ICard {
@@ -17,18 +20,25 @@ interface ICard {
   styleUrls: ['./activity-grid.component.css']
 })
 
-export class ActivityGridComponent implements OnInit {
+export class ActivityGridComponent implements OnInit, OnDestroy {
   cols = 3;
-  items: ICard[]= [];
-
-  constructor(public el: ElementRef, public as: ActServiceService) {
-    this.as.getactivities().subscribe(acts => {
+  items: ICard[] = [];
+  private acts$: Subscription;
+  private media$: Subscription;
+  constructor(public el: ElementRef, public as: ActServiceService, public media: ObservableMedia) {
+    // refactor refactor to make ICard's an observable and use | async?
+    this.acts$ = this.as.getactivities().subscribe(acts => {
       acts.forEach(activity => {
        this.items.push({header: activity.name,
                         body: activity.description,
                         image: activity.image,
                         footer: activity.organization.Url.toString()});
       }); // forEach activity
+    });
+    const COLUMNS = {'xs': 1, 'sm': 2, 'md': 3, 'lg': 4, 'xl': 4};
+    this.media$ = this.media.subscribe( (change: MediaChange) => {
+        this.cols = COLUMNS[change.mqAlias];
+        console.log('fxflex media:' + media);
     });
   }
 
@@ -37,6 +47,11 @@ export class ActivityGridComponent implements OnInit {
   }
   sizeCols(width) {
     return( Math.floor(width / 300) >= 1 ? Math.floor(width / 300) : 1);
+  }
+
+  ngOnDestroy() {
+    this.acts$.unsubscribe();
+    this.media$.unsubscribe();
   }
   onResize(event) {
     const element = event.target.innerWidth;
