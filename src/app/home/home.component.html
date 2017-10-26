@@ -8,4 +8,14 @@
   at <a href="http://www.northwestern.edu">Northwestern University</a> in the <a href="http://www.farley.northwestern.edu/index.html">Farley Center</a> via a course 
   called <a href="http://www.farley.northwestern.edu/we-teach/nuvention/web-and-media.html">NUvention Web</a>
 </md-card>
-<app-activity-grid></app-activity-grid>
+<md-accordion>
+  <md-expansion-panel *ngFor="let act of curact">
+    <md-expansion-panel-header class="header-area mat-typography">
+        <h1 *ngIf="act!=activeclass">{{act}}s</h1>
+        <h1 *ngIf="act==activeclass">{{act}}es</h1>
+      </md-expansion-panel-header>
+    <div class="content-area">
+      <app-activity-grid [activityType]="[act]"></app-activity-grid>
+    </div>
+  </md-expansion-panel>
+</md-accordion>

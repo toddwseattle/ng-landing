@@ -1,8 +1,8 @@
-import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy, Input } from '@angular/core';
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { IActivity, Activity, InvestmentActivity, IImage } from '../common/activity';
+import { IActivity, Activity, ACTIVETYPE, InvestmentActivity, IImage } from '../common/activity';
 import { ActServiceService } from '../common/act-service.service';
 interface ICard {
     header: string;
@@ -21,13 +21,22 @@ interface ICard {
 })
 
 export class ActivityGridComponent implements OnInit, OnDestroy {
+  @Input() activityType: ACTIVETYPE[];
   cols = 3;
   items: ICard[] = [];
   private acts$: Subscription;
   private media$: Subscription;
   constructor(public el: ElementRef, public as: ActServiceService, public media: ObservableMedia) {
-    // refactor refactor to make ICard's an observable and use | async?
-    this.acts$ = this.as.getactivities().subscribe(acts => {
+
+    const COLUMNS = {'xs': 1, 'sm': 2, 'md': 3, 'lg': 4, 'xl': 4};
+    this.media$ = this.media.subscribe( (change: MediaChange) => {
+        this.cols = COLUMNS[change.mqAlias];
+    });
+  }
+
+  ngOnInit() {
+  // refactor refactor to make ICard's an observable and use | async?
+  this.acts$ = this.as.getactivities(this.activityType).subscribe(acts => {
       acts.forEach(activity => {
        this.items.push({header: activity.name,
                         body: activity.description,
@@ -35,15 +44,7 @@ export class ActivityGridComponent implements OnInit, OnDestroy {
                         footer: activity.organization.Url.toString()});
       }); // forEach activity
     });
-    const COLUMNS = {'xs': 1, 'sm': 2, 'md': 3, 'lg': 4, 'xl': 4};
-    this.media$ = this.media.subscribe( (change: MediaChange) => {
-        this.cols = COLUMNS[change.mqAlias];
-        console.log('fxflex media:' + media);
-    });
-  }
-
-  ngOnInit() {
-    this.cols = this.sizeCols(this.el.nativeElement.offsetWdith);
+   // this.cols = this.sizeCols(this.el.nativeElement.offsetWdith);
   }
   sizeCols(width) {
     return( Math.floor(width / 300) >= 1 ? Math.floor(width / 300) : 1);
@@ -52,11 +53,6 @@ export class ActivityGridComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.acts$.unsubscribe();
     this.media$.unsubscribe();
-  }
-  onResize(event) {
-    const element = event.target.innerWidth;
-    console.log(element);
-    this.cols = this.sizeCols(element);
   }
 
 }

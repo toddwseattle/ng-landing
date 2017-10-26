@@ -47,18 +47,18 @@ export class ActServiceService {
 }
 
   public getactivities(activities?: ACTIVETYPE[]): Observable<IActivity[]> {
+    const retrievelists: FirebaseListObservable<IActivity[]>[] = [];
     if ( activities == null ) {
       activities = allActivities;
-      return Observable.zip(this.$activityLists.Investment, this.$activityLists.Class,
-                            this.$activityLists.DevProject)
+    }
+    activities.forEach((a: ACTIVETYPE) => {
+      retrievelists.push(this.$activityLists[a]);
+    });
+      return Observable.zip(...retrievelists)
                  .map( (x) => {
                    const y = [].concat.apply([], x);
                   return y; });
-      // return Observable.zip(this.$classes, this.$investments).map( (c: [IActivity[]]) =>  (c[0].concat(c[1])));
-    }
-    // else if (activities.indexOf(ACTIVETYPE.Investment) >= 0) {
-    //   return this.$investments;
-    }
+       }
   private fixActivity(tofix: IActivity, key: string): IActivity {
     const fixed = tofix;
     if (!fixed.hidden) {
