@@ -3,12 +3,12 @@
    <md-grid-tile *ngFor="let item of items">
      <div class="container">
       <article class="caption">
-     <!--  <div class="caption__overlay">
+      <div class="caption__overlay">
         <h1 class="caption__overlay__title">{{item.header}} </h1>
-          <div class="mat-body-2 caption__overlay__content" [innerHTML]="item.body"></div>
-      </div> -->
+        <div class="caption caption__overlay__content" [innerHTML]="item.body"></div>
+      </div>
       <div>
-      <img [src]="item.image.Url" [alt]="item.header" class="caption_media">
+      <img [src]="item.image.Url" width=300 [alt]="item.header" class="caption_media">
       </div>
     </article> 
     </div>
