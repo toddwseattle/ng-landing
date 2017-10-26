@@ -16,7 +16,7 @@ import { environment } from '../environments/environment';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
-
+import { CoreModule } from './core/core.module';
 import { AppComponent } from './app.component';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
@@ -46,6 +46,7 @@ import { ByteFormatPipe } from './byte-format.pipe';
     ByteFormatPipe,
   ],
   imports: [
+    CoreModule,
     BrowserModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
