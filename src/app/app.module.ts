@@ -10,11 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import 'hammerjs';
-// firebase related imports
 import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { CoreModule } from './core/core.module';
 import { AppComponent } from './app.component';
@@ -64,8 +61,6 @@ import { ByteFormatPipe } from './byte-format.pipe';
     FormsModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase, 'ng-landing'),
-    AngularFireAuthModule,
-    AngularFireDatabaseModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: false } // <-- debugging purposes only
