@@ -21,7 +21,6 @@ import { appRoutes } from './app-routes';
 import { SocialNetsComponent } from './social-nets/social-nets.component';
 import { ActivityGridComponent } from './activity-grid/activity-grid.component';
 
-import { ActServiceService } from './common/act-service.service';
 import { AddActivityComponent } from './add-activity/add-activity.component';
 import { EditActivityComponent } from './edit-activity/edit-activity.component';
 import { InputFileComponent } from './input-file/input-file.component';
@@ -66,7 +65,7 @@ import { ByteFormatPipe } from './byte-format.pipe';
       { enableTracing: false } // <-- debugging purposes only
     )
   ],
-  providers: [ActServiceService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

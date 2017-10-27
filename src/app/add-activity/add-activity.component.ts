@@ -6,8 +6,8 @@ import { ACTIVETYPE, allActivities, IActivity,
          AngelActivity, ClassActivity, DevProjectActivity,
          InvestmentActivity, NonProfitActivity, PresentationActivity,
          IImage, ILink, IActivityGeneralProps, getTypefromString
-         } from '../common/activity';
-import { ActServiceService } from '../common/act-service.service';
+         } from '../core/activity';
+import { ActServiceService } from '../core/act-service.service';
 import { FirebaseObjectObservable } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';

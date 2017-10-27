@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ACTIVETYPE, allActivities } from '../common/activity';
+import { ACTIVETYPE, allActivities } from '../core/activity';
 
 @Component({
   selector: 'app-home',

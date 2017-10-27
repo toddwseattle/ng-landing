@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from './auth.service';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { ActServiceService } from './act-service.service';
 
 
 @NgModule({
@@ -13,6 +14,6 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
     AngularFireDatabaseModule,
   ],
   declarations: [],
-  providers: [AuthService]
+  providers: [AuthService, ActServiceService]
 })
 export class CoreModule { }

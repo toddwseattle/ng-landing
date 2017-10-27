@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ActServiceService } from '../common/act-service.service';
-import { IActivity, Activity, ACTIVETYPE } from '../common/activity';
+import { ActServiceService } from '../core/act-service.service';
+import { IActivity, Activity, ACTIVETYPE } from '../core/activity';
 import { FirebaseListObservable } from 'angularfire2/database';
 import { Observable } from 'rxjs/observable';
 

@@ -2,8 +2,8 @@ import { Component, OnInit, ElementRef, OnDestroy, Input } from '@angular/core';
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { IActivity, Activity, ACTIVETYPE, InvestmentActivity, IImage } from '../common/activity';
-import { ActServiceService } from '../common/act-service.service';
+import { IActivity, Activity, ACTIVETYPE, InvestmentActivity, IImage } from '../core/activity';
+import { ActServiceService } from '../core/act-service.service';
 interface ICard {
     header: string;
     body: string;
