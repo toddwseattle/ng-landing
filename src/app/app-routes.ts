@@ -3,6 +3,9 @@ import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 import { EditActivityComponent } from './edit-activity/edit-activity.component';
 import { AddActivityComponent } from './add-activity/add-activity.component';
+import { LoginComponent } from './login/login.component';
+import { AdminGuard } from './core/admin.guard';
+
 export const appRoutes: Routes = [
     {
         path: 'home',
@@ -14,19 +17,27 @@ export const appRoutes: Routes = [
     },
     {
         path: 'editactivity',
-        component: EditActivityComponent
+        component: EditActivityComponent,
+        canActivate: [AdminGuard]
+    },
+    {
+        path: 'login',
+        component: LoginComponent
     },
     {
         path: 'activity/:type/:key',
-        component: AddActivityComponent
+        component: AddActivityComponent,
+        canActivate: [AdminGuard]
     },
     {
         path: 'activity/:type',
-        component: AddActivityComponent
+        component: AddActivityComponent,
+        canActivate: [AdminGuard]
     },
     {
         path: 'activity',
-        component: AddActivityComponent
+        component: AddActivityComponent,
+        canActivate: [AdminGuard]
     },
     {
         path: '',

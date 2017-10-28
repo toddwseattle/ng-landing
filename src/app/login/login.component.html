@@ -1,0 +1,26 @@
+<button *ngIf="!((user$ | async)?.uid)" md-raised-button color="warn" (click)="doLogin()">Login with google</button>
+<md-card *ngIf="((user$ | async)?.uid)">
+  <md-card-header><img mat-card-avatar [src]="(user$ | async)?.photoURL">
+  {{(user$ | async)?.displayName}}</md-card-header>
+  <md-card-content>
+    <ul>
+      <li>email: {{(user$ | async)?.email}}</li>
+      <li><ng-container *ngIf="(user$ | async)?.admin; else notadmin">
+        <p>Admin</p>
+      </ng-container>
+      <ng-template #notadmin>
+        <p>Not an Admin</p>
+      </ng-template>
+      </li>
+    </ul>
+  </md-card-content>
+  <md-card-footer>
+      <button md-raised-button color="primary" (click)="doLogout()">Logout</button>
+      <ng-container *ngIf="(user$ |async)?.admin; else elseTemplate">
+          <a [routerLink]="[ '/editactivity']">Edit Activities</a>  
+      </ng-container>
+      <ng-template #elseTemplate>
+          <a [routerLink]="[ '/home']">Home</a>
+      </ng-template>
+  </md-card-footer>
+</md-card>

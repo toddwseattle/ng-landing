@@ -25,6 +25,7 @@ import { AddActivityComponent } from './add-activity/add-activity.component';
 import { EditActivityComponent } from './edit-activity/edit-activity.component';
 import { InputFileComponent } from './input-file/input-file.component';
 import { ByteFormatPipe } from './byte-format.pipe';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -40,6 +41,7 @@ import { ByteFormatPipe } from './byte-format.pipe';
     EditActivityComponent,
     InputFileComponent,
     ByteFormatPipe,
+    LoginComponent,
   ],
   imports: [
     CoreModule,
