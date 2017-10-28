@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, OnDestroy, Input } from '@angular/core';
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { IActivity, Activity, ACTIVETYPE, InvestmentActivity, IImage } from '../core/activity';
+import { IActivity, Activity, PresentationActivity, ACTIVETYPE, InvestmentActivity, IImage } from '../core/activity';
 import { ActServiceService } from '../core/act-service.service';
 interface ICard {
     header: string;
@@ -38,11 +38,20 @@ export class ActivityGridComponent implements OnInit, OnDestroy {
   // refactor refactor to make ICard's an observable and use | async?
   this.acts$ = this.as.getactivities(this.activityType).subscribe(acts => {
       acts.forEach(activity => {
-       this.items.push({header: activity.name,
-                        body: activity.description,
-                        image: activity.image,
-                        footer: activity.organization.Url.toString()});
+       if (activity.activetype === ACTIVETYPE.Presentation) {
+         const prezo = activity as PresentationActivity;
+         this.items.push({header: prezo.name,
+          body: prezo.description,
+          image: prezo.image,
+          footer: prezo.presentation.Url.toString() });
+       } else {
+        this.items.push({header: activity.name,
+          body: activity.description,
+          image: activity.image,
+          footer: activity.organization.Url.toString()});
+        }
       }); // forEach activity
+
     });
    // this.cols = this.sizeCols(this.el.nativeElement.offsetWdith);
   }
