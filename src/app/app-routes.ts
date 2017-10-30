@@ -16,27 +16,12 @@ export const appRoutes: Routes = [
         component: AboutComponent
     },
     {
-        path: 'editactivity',
-        component: EditActivityComponent,
-        canActivate: [AdminGuard]
-    },
-    {
         path: 'login',
         component: LoginComponent
     },
     {
-        path: 'activity/:type/:key',
-        component: AddActivityComponent,
-        canActivate: [AdminGuard]
-    },
-    {
-        path: 'activity/:type',
-        component: AddActivityComponent,
-        canActivate: [AdminGuard]
-    },
-    {
-        path: 'activity',
-        component: AddActivityComponent,
+        path: 'admin',
+        loadChildren: 'app/admin/admin.module#AdminModule',
         canActivate: [AdminGuard]
     },
     {

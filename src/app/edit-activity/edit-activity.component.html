@@ -1,7 +1,7 @@
 <div fxLayout="column" fxLayoutAlign="space-around"  fxFlex>
     <h2 fxFlex>Current Activities</h2>
     <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
-        <a [routerLink]="['/activity']" fxFlex="15" md-raised-button  >Add</a>
+        <a [routerLink]="['activity']" fxFlex="15" md-raised-button  >Add</a>
         <button fxFlex="15" md-raised-button (click)="applyChange()">Apply</button>
     </div>
 <md-nav-list fxFlex>
@@ -15,7 +15,7 @@
     <md-list-item class="full" *ngFor="let activity of (activities$ | async)">
         <div class="col-5"><md-checkbox (change)="deleteCheck(activity.id)"></md-checkbox></div>
         <div class="col-5"><md-checkbox [(value)]="activity.hidden"></md-checkbox></div>
-        <div class="col-20"><a [routerLink]="'/activity/'+activity.activetype+'/'+ activity.$key">{{activity.name}}</a></div>
+        <div class="col-20"><a [routerLink]="'activity/'+activity.activetype+'/'+ activity.$key">{{activity.name}}</a></div>
         <div class="col-40">{{activity.description.substr(0,30)}}...</div>
         <div class="col-10">{{activity.activetype}}</div>
     </md-list-item>
