@@ -15,9 +15,9 @@ import { routing } from './admin.routing';
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
   ],
-  declarations: [AddActivityComponent, EditActivityComponent, InputFileComponent],
+  declarations: [AddActivityComponent, EditActivityComponent, InputFileComponent, ByteFormatPipe],
   providers: [ByteFormatPipe]
 })
 export class AdminModule { }

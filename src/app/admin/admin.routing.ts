@@ -16,8 +16,14 @@ const adminRoutes: Routes = [
      {
         path: '',
         component: EditActivityComponent,
-        pathMatch: 'full'
-        // canActivate: [AdminGuard]
+        pathMatch: 'full',
+        canActivate: [AdminGuard]
+    },
+    {
+        path: 'editactivity',
+        component: EditActivityComponent,
+        pathMatch: 'full',
+        canActivate: [AdminGuard]
     },
     {
         path: 'activity/:type/:key',

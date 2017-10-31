@@ -194,7 +194,6 @@ updateOrCreate(a: IActivity) {
 uploadImageAndCreateOrSaveActivity(a: IActivity, v: IAddActivity): void {
     if (v.general.uploadfiles && (v.general.uploadfiles.length > 0)) {
       this.as.uploadImagefile(v.general.uploadfiles[0]).then(snap => {
-        console.log(snap);
         a.image.Url = snap.downloadURL;
         a.image.altText = v.general.uploadfiles[0].name;
         this.updateOrCreate(a);

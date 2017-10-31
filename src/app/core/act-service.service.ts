@@ -27,7 +27,6 @@ export class ActServiceService {
   private _fb: firebase.app.App;
   constructor(public db: AngularFireDatabase) {
 
-    allActivities.forEach(a => console.log(a));
     this.$activityLists[ACTIVETYPE.Angel] = db.list(this.activepath(ACTIVETYPE.Angel));
     allActivities.forEach( act => {
       this.$activityLists[act] = db.list(this.activepath(act));

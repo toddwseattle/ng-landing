@@ -15,9 +15,6 @@ export class EditActivityComponent implements OnInit {
   deletelist: string[]= [];
   constructor(public as: ActServiceService, public router: Router) {
     this.activities$ = as.getactivities();
-    this.activities$.subscribe(x => {
-      console.log(x);
-    });
   }
 
   ngOnInit() {
@@ -35,9 +32,5 @@ export class EditActivityComponent implements OnInit {
     } else {
       this.deletelist.push(id);
     }
-  }
- activityClick(a: IActivity) {
-    console.log(a.name + ': ' + a.activetype);
-   // this.as.getActivitybyName(a.activetype, a.name).subscribe(key => console.log(key));
   }
 }

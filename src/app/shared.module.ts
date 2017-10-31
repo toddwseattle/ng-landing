@@ -11,6 +11,7 @@ import { MdToolbarModule, MdInputModule, MdCheckboxModule, MdSidenavModule, MdCa
 // angularfire
   import { AngularFireAuthModule } from 'angularfire2/auth';
   import { AngularFireDatabaseModule } from 'angularfire2/database';
+// byte format pipe
 @NgModule({
     declarations: [],
     imports: [ CommonModule,
@@ -30,7 +31,7 @@ import { MdToolbarModule, MdInputModule, MdCheckboxModule, MdSidenavModule, MdCa
         MdSelectModule,
         MdIconModule,
         MdExpansionModule,
-        FlexLayoutModule
+        FlexLayoutModule,
      ],
     exports:  [CommonModule,
         AngularFireAuthModule,
