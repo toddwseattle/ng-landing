@@ -1,6 +1,6 @@
  <md-grid-list [cols]=cols rowHeight="300px">
    
-   <md-grid-tile *ngFor="let item of items">
+   <md-grid-tile *ngFor="let item of items" (click)="showDetail(item)" >
      <div class="container">
       <article class="caption">
       <div class="caption__overlay">

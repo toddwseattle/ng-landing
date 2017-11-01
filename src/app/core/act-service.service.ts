@@ -27,9 +27,9 @@ export class ActServiceService {
 
   constructor(public db: AngularFireDatabase, public fbApp: FirebaseApp) {
 
-    this.$activityLists[ACTIVETYPE.Angel] = db.list(this.activepath(ACTIVETYPE.Angel));
+  //  this.$activityLists[ACTIVETYPE.Angel] = db.list(this.activepath(ACTIVETYPE.Angel),  { query: ref => ref.orderByChild('name') });
     allActivities.forEach( act => {
-      this.$activityLists[act] = db.list(this.activepath(act));
+      this.$activityLists[act] = db.list(this.activepath(act),  { query: { orderByChild: 'name'}} );
     });
     this.$investments = db.list(this.activepath(ACTIVETYPE.Investment));
     this.$classes = db.list(this.activepath(ACTIVETYPE.Class));
@@ -88,6 +88,16 @@ export class ActServiceService {
     }
   }
 
+  public getActivefromName(active: ACTIVETYPE, name: string): Observable<IActivity> {
+    if (active && name) {
+      return (
+        this.db.list(this.activepath(active),  { query: { orderByChild: 'name', equalTo: name }})
+          .switchMap(list => Observable.of(list[0]) as Observable<IActivity>)
+      );
+    } else {
+      return( Observable.of(null));
+    }
+  }
 
   public uploadImagefile(f: File): firebase.Thenable<any> {
     const rootRef = this.fbApp.storage().ref();

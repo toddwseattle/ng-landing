@@ -1,5 +1,7 @@
 import { Component, OnInit, ElementRef, OnDestroy, Input } from '@angular/core';
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
+import { Router } from '@angular/router';
+
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { IActivity, Activity, PresentationActivity, ACTIVETYPE, InvestmentActivity, IImage } from '../core/activity';
@@ -9,6 +11,7 @@ interface ICard {
     body: string;
     image: IImage ;
     footer: string;
+    act: ACTIVETYPE;
   }
 
 
@@ -26,7 +29,7 @@ export class ActivityGridComponent implements OnInit, OnDestroy {
   items: ICard[] = [];
   private acts$: Subscription;
   private media$: Subscription;
-  constructor(public el: ElementRef, public as: ActServiceService, public media: ObservableMedia) {
+  constructor(public el: ElementRef, public as: ActServiceService, public media: ObservableMedia, public route: Router) {
 
     const COLUMNS = {'xs': 1, 'sm': 2, 'md': 3, 'lg': 4, 'xl': 4};
     this.media$ = this.media.subscribe( (change: MediaChange) => {
@@ -43,12 +46,15 @@ export class ActivityGridComponent implements OnInit, OnDestroy {
          this.items.push({header: prezo.name,
           body: prezo.description,
           image: prezo.image,
-          footer: prezo.presentation.Url.toString() });
+          footer: prezo.presentation.Url.toString(),
+         act: activity.activetype });
        } else {
         this.items.push({header: activity.name,
           body: activity.description,
           image: activity.image,
-          footer: activity.organization.Url.toString()});
+          footer: activity.organization.Url.toString(),
+          act: activity.activetype
+        });
         }
       }); // forEach activity
 
@@ -59,6 +65,9 @@ export class ActivityGridComponent implements OnInit, OnDestroy {
     return( Math.floor(width / 300) >= 1 ? Math.floor(width / 300) : 1);
   }
 
+  showDetail(item: ICard) {
+    this.route.navigateByUrl('activity/' + item.act + '/' + item.header);
+  }
   ngOnDestroy() {
     this.acts$.unsubscribe();
     this.media$.unsubscribe();
