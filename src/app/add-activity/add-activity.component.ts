@@ -155,7 +155,7 @@ export class AddActivityComponent implements OnInit, OnDestroy {
         console.log('error');
       break;
     }
-    this.router.navigate(['editactivity']);
+    this.router.navigate(['admin']);
   }
 
 updateEditfromCreatepromise(a: IActivity) {

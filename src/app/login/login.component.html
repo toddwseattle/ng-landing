@@ -17,7 +17,7 @@
   <md-card-footer>
       <button md-raised-button color="primary" (click)="doLogout()">Logout</button>
       <ng-container *ngIf="(user$ |async)?.admin; else elseTemplate">
-          <a [routerLink]="[ '/editactivity']">Edit Activities</a>  
+          <a [routerLink]="[ '/admin']">Edit Activities</a>  
       </ng-container>
       <ng-template #elseTemplate>
           <a [routerLink]="[ '/home']">Home</a>

@@ -53,7 +53,7 @@ export class ActivityGridComponent implements OnInit, OnDestroy {
       }); // forEach activity
 
     });
-   // this.cols = this.sizeCols(this.el.nativeElement.offsetWdith);
+   this.cols = this.sizeCols(this.el.nativeElement.offsetWdith);
   }
   sizeCols(width) {
     return( Math.floor(width / 300) >= 1 ? Math.floor(width / 300) : 1);

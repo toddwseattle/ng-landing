@@ -17,6 +17,7 @@ import { SocialNetsComponent } from './social-nets/social-nets.component';
 import { ActivityGridComponent } from './activity-grid/activity-grid.component';
 
 import { LoginComponent } from './login/login.component';
+import { ActivityDetailComponent } from './activity-detail/activity-detail.component';
 
 
 
@@ -29,6 +30,7 @@ import { LoginComponent } from './login/login.component';
     SocialNetsComponent,
     ActivityGridComponent,
     LoginComponent,
+    ActivityDetailComponent,
   ],
   imports: [
     CoreModule,

@@ -13,7 +13,7 @@ import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/observable/concat';
 
 
-import * as firebase from 'firebase';
+import 'firebase/storage';
 
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { FirebaseApp } from 'angularfire2';
@@ -24,7 +24,8 @@ export class ActServiceService {
   public $activityLists: activityarray= {Angel: null, DevProject: null, NonProfit: null, Investment: null, Class: null, Presentation: null};
   public $investments: FirebaseListObservable<InvestmentActivity[]>;
   public $classes: FirebaseListObservable<ClassActivity[]>;
-  constructor(public db: AngularFireDatabase, public fbapp: FirebaseApp) {
+
+  constructor(public db: AngularFireDatabase, public fbApp: FirebaseApp) {
 
     this.$activityLists[ACTIVETYPE.Angel] = db.list(this.activepath(ACTIVETYPE.Angel));
     allActivities.forEach( act => {
@@ -89,7 +90,7 @@ export class ActServiceService {
 
 
   public uploadImagefile(f: File): firebase.Thenable<any> {
-    const rootRef = this.fbapp.storage().ref();
+    const rootRef = this.fbApp.storage().ref();
     const filepath = '/images/' + f.name;
     const imageRef = rootRef.child(filepath);
     return(imageRef.put(f));
