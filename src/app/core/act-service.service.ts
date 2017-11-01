@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Activity, IActivity, ACTIVETYPE, allActivities, InvestmentActivity, ClassActivity  } from './activity';
 import { divergentinvestments } from './activity-data';
 import { Observable } from 'rxjs/Observable';
-import { environment } from '../../environments/environment';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/reduce';
@@ -17,6 +16,7 @@ import 'rxjs/add/observable/concat';
 import * as firebase from 'firebase';
 
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import { FirebaseApp } from 'angularfire2';
 
 type activityarray = { [a in ACTIVETYPE] : FirebaseListObservable<IActivity[]> };
 @Injectable()
@@ -24,8 +24,7 @@ export class ActServiceService {
   public $activityLists: activityarray= {Angel: null, DevProject: null, NonProfit: null, Investment: null, Class: null, Presentation: null};
   public $investments: FirebaseListObservable<InvestmentActivity[]>;
   public $classes: FirebaseListObservable<ClassActivity[]>;
-  private _fb: firebase.app.App;
-  constructor(public db: AngularFireDatabase) {
+  constructor(public db: AngularFireDatabase, public fbapp: FirebaseApp) {
 
     this.$activityLists[ACTIVETYPE.Angel] = db.list(this.activepath(ACTIVETYPE.Angel));
     allActivities.forEach( act => {
@@ -33,7 +32,6 @@ export class ActServiceService {
     });
     this.$investments = db.list(this.activepath(ACTIVETYPE.Investment));
     this.$classes = db.list(this.activepath(ACTIVETYPE.Class));
-    this._fb = firebase.initializeApp(environment.firebase);
 
    }
 
@@ -91,7 +89,7 @@ export class ActServiceService {
 
 
   public uploadImagefile(f: File): firebase.Thenable<any> {
-    const rootRef = this._fb.storage().ref();
+    const rootRef = this.fbapp.storage().ref();
     const filepath = '/images/' + f.name;
     const imageRef = rootRef.child(filepath);
     return(imageRef.put(f));
