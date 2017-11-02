@@ -1,12 +1,11 @@
 <md-card class="mat-typography">
-<md-card-header><img [src]="($currentActivity|async)?.image.Url" alt="Image"></md-card-header>  
+<md-card-header><img [src]="($currentActivity|async)?.image.Url"  alt="Image"></md-card-header>  
 <md-card-title>{{($currentActivity | async)?.name}}</md-card-title>
 <md-card-subtitle>{{($currentActivity | async)?.activetype}}</md-card-subtitle>
 <md-card-content>
   <ul>
     <li>{{($currentActivity | async)?.description}}</li>
-    <li><a [href]="($currentActivity | async)?.organization.Url">{{($currentActivity | async)?.organization.label}} </a> </li>
-    <li></li>
+    <li>Visit: <a [href]="($currentActivity | async)?.organization.Url">{{($currentActivity | async)?.organization.label}} </a> </li>
   </ul>
 </md-card-content>  
 </md-card>
