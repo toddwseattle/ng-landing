@@ -1,8 +1,8 @@
-<button *ngIf="!((user$ | async)?.uid)" md-raised-button color="warn" (click)="doLogin()">Login with google</button>
-<md-card *ngIf="((user$ | async)?.uid)">
-  <md-card-header><img mat-card-avatar [src]="(user$ | async)?.photoURL">
-  {{(user$ | async)?.displayName}}</md-card-header>
-  <md-card-content>
+<button *ngIf="!((user$ | async)?.uid)" mat-raised-button color="warn" (click)="doLogin()">Login with google</button>
+<mat-card *ngIf="((user$ | async)?.uid)">
+  <mat-card-header><img mat-card-avatar [src]="(user$ | async)?.photoURL">
+  {{(user$ | async)?.displayName}}</mat-card-header>
+  <mat-card-content>
     <ul>
       <li>email: {{(user$ | async)?.email}}</li>
       <li><ng-container *ngIf="(user$ | async)?.admin; else notadmin">
@@ -13,14 +13,14 @@
       </ng-template>
       </li>
     </ul>
-  </md-card-content>
-  <md-card-footer>
-      <button md-raised-button color="primary" (click)="doLogout()">Logout</button>
+  </mat-card-content>
+  <mat-card-footer>
+      <button mat-raised-button color="primary" (click)="doLogout()">Logout</button>
       <ng-container *ngIf="(user$ |async)?.admin; else elseTemplate">
           <a [routerLink]="[ '/admin']">Edit Activities</a>  
       </ng-container>
       <ng-template #elseTemplate>
           <a [routerLink]="[ '/home']">Home</a>
       </ng-template>
-  </md-card-footer>
-</md-card>
+  </mat-card-footer>
+</mat-card>

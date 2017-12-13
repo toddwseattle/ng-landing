@@ -11,28 +11,28 @@ import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/merge';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/observable/concat';
+import * as firebase from 'firebase';
+// import 'firebase';
+// import 'firebase/storage';
 
-
-import 'firebase/storage';
-
-import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
 import { FirebaseApp } from 'angularfire2';
 
-type activityarray = { [a in ACTIVETYPE] : FirebaseListObservable<IActivity[]> };
+type activityarray = { [a in ACTIVETYPE] : Observable<IActivity[]> };
 @Injectable()
 export class ActServiceService {
   public $activityLists: activityarray= {Angel: null, DevProject: null, NonProfit: null, Investment: null, Class: null, Presentation: null};
-  public $investments: FirebaseListObservable<InvestmentActivity[]>;
-  public $classes: FirebaseListObservable<ClassActivity[]>;
+  public $investments: Observable<InvestmentActivity[]>;
+  public $classes: Observable<ClassActivity[]>;
 
   constructor(public db: AngularFireDatabase, public fbApp: FirebaseApp) {
 
   //  this.$activityLists[ACTIVETYPE.Angel] = db.list(this.activepath(ACTIVETYPE.Angel),  { query: ref => ref.orderByChild('name') });
     allActivities.forEach( act => {
-      this.$activityLists[act] = db.list(this.activepath(act),  { query: { orderByChild: 'name'}} );
+      this.$activityLists[act] = db.list<IActivity>(this.activepath(act), ref => ref.orderByChild('name')).valueChanges();
     });
-    this.$investments = db.list(this.activepath(ACTIVETYPE.Investment));
-    this.$classes = db.list(this.activepath(ACTIVETYPE.Class));
+    this.$investments = db.list<InvestmentActivity>(this.activepath(ACTIVETYPE.Investment)).valueChanges();
+    this.$classes = db.list<ClassActivity>(this.activepath(ACTIVETYPE.Class)).valueChanges();
 
    }
 
@@ -45,7 +45,7 @@ export class ActServiceService {
 }
 
   public getactivities(activities?: ACTIVETYPE[]): Observable<IActivity[]> {
-    const retrievelists: FirebaseListObservable<IActivity[]>[] = [];
+    const retrievelists: Observable<IActivity[]>[] = [];
     if ( activities == null ) {
       activities = allActivities;
     }
@@ -81,17 +81,18 @@ export class ActServiceService {
   }
   public getActivitybyKey(qa: ACTIVETYPE, key: string): Observable<IActivity> {
     if (qa && key) {
-    return(this.db.object(this.activepath(qa) + '/' + key).switchMap(activity => Observable.of(this.fixActivity(activity, key))));
+    return(this.db.object<IActivity>(this.activepath(qa) + '/' + key).valueChanges()
+          .switchMap(activity => Observable.of(this.fixActivity(activity, key))));
     } else {
       console.log('getActivitybyKey invalid params activity:%s key:%s', qa, key);
-      return(Observable.empty<IActivity>() as FirebaseObjectObservable<IActivity>);
+      return(Observable.empty<IActivity>());
     }
   }
 
   public getActivefromName(active: ACTIVETYPE, name: string): Observable<IActivity> {
     if (active && name) {
       return (
-        this.db.list(this.activepath(active),  { query: { orderByChild: 'name', equalTo: name }})
+        this.db.list(this.activepath(active),  ref => ref.orderByChild('name').equalTo(name)).valueChanges()
           .switchMap(list => Observable.of(list[0]) as Observable<IActivity>)
       );
     } else {
@@ -99,20 +100,20 @@ export class ActServiceService {
     }
   }
 
-  public uploadImagefile(f: File): firebase.Thenable<any> {
+  public uploadImagefile(f: File): firebase.storage.UploadTask    {
     const rootRef = this.fbApp.storage().ref();
     const filepath = '/images/' + f.name;
     const imageRef = rootRef.child(filepath);
     return(imageRef.put(f));
   }
 
-  public updateActivity(a: IActivity): firebase.Thenable<any> {
+  public updateActivity(a: IActivity): Promise<void> {
     const actpath = this.activepath(a.activetype) + '/' + a.key;
     delete a['$key'];
     const actobj = this.db.object(actpath);
     return(actobj.update(a));
   }
-  public createActivity(a: IActivity): firebase.Thenable<any> {
+  public createActivity(a: IActivity): firebase.database.ThenableReference {
     return(this.db.list(this.activepath(a.activetype)).push(a));
   }
  }

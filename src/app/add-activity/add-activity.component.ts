@@ -8,7 +8,7 @@ import { ACTIVETYPE, allActivities, IActivity,
          IImage, ILink, IActivityGeneralProps, getTypefromString
          } from '../core/activity';
 import { ActServiceService } from '../core/act-service.service';
-import { FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireObject } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/of';
@@ -166,15 +166,15 @@ updateEditfromCreatepromise(a: IActivity) {
 
 updateOrCreate(a: IActivity) {
   if (!this.editmode) {
-    this.as.createActivity(a).then(av => this.updateEditfromCreatepromise(av))
-    .catch(e => {
-      console.log('activity creatin error %s', e.message);
-    });
+    this.as.createActivity(a).then(av => this.updateEditfromCreatepromise(av),
+        (e => {
+          console.log('activity creatin error %s', e.message);
+        }));
   } else {
     a.key = this.currentact.key;
    // a.$key = this.currentact.$key;
   //  a.$ref = this.currentact.$ref;
-    this.as.updateActivity(a).then(av => this.updateEditfromCreatepromise(av))
+    this.as.updateActivity(a).then(__ => this.updateEditfromCreatepromise(a))
     .catch(e => {
       console.log('activity update error %s: %s', e.name, e.message);
     });

@@ -1,22 +1,22 @@
 <div fxFlexLayout="column">
 
-  <md-toolbar color="primary">
-   <button md-button  (click)="sidenav.opened=!sidenav.opened;"><span class="mat-display-1">toddwseattle</span></button>
+  <mat-toolbar color="primary">
+   <button mat-button  (click)="sidenav.opened=!sidenav.opened;"><span class="mat-display-1">toddwseattle</span></button>
     <div class="toolbar-button">
-    <a md-button routerLink="/">Overview</a>
-    <a md-button routerLink="/">Divergent</a>
-    <a md-button routerLink="/">Consulting</a>
-    <a md-button routerLink="/">Bio</a>
-    <a md-button routerLink="/about">About</a>
+    <a mat-button routerLink="/">Overview</a>
+    <a mat-button routerLink="/">Divergent</a>
+    <a mat-button routerLink="/">Consulting</a>
+    <a mat-button routerLink="/">Bio</a>
+    <a mat-button routerLink="/about">About</a>
     </div>
-  </md-toolbar>
-  <md-sidenav-container>
-    <md-sidenav #sidenav mode="side" opened="false">
+  </mat-toolbar>
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened="false">
      <app-social-nets></app-social-nets>
   
-    </md-sidenav>
+    </mat-sidenav>
     <div fxLayout="column" class="content-area" >
      <router-outlet fxFlex></router-outlet>
     </div>
- </md-sidenav-container>
+ </mat-sidenav-container>
 </div>

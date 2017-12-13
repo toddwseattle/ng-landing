@@ -3,13 +3,13 @@
     <div class="mat-input-flex">
       <div class="mat-input-infix">
   
-        <input #input id="md-input-file" type="file" (change)="onChange($event)" (click)="onTouched($event)" (focusin)="onFocusToggle()"
+        <input #input id="mat-input-file" type="file" (change)="onChange($event)" (click)="onTouched($event)" (focusin)="onFocusToggle()"
           (focusout)="onFocusToggle()" [attr.multiple]="multiple? '' : null">
         <span class="mat-button filename" (click)="open()">{{fileNames}}</span>
-        <button md-button type="button" mdSuffix (click)="open()" (focusin)="onFocusToggle()" (focusout)="onFocusToggle()"><md-icon>image</md-icon></button>
+        <button mat-button type="button" mdSuffix (click)="open()" (focusin)="onFocusToggle()" (focusout)="onFocusToggle()"><mat-icon>image</mat-icon></button>
   
         <span class="mat-input-placeholder-wrapper">
-          <label for="md-input-file" class="mat-caption" [class.mat-empty]="false">{{placeholder}}
+          <label for="mat-input-file" class="mat-caption" [class.mat-empty]="false">{{placeholder}}
             <span class="mat-placeholder-required" *ngIf="required">*</span>
         </label>
         </span>
