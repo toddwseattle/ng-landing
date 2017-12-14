@@ -12,8 +12,6 @@ import 'rxjs/add/operator/merge';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/observable/concat';
 import * as firebase from 'firebase';
-// import 'firebase';
-// import 'firebase/storage';
 
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
 import { FirebaseApp } from 'angularfire2';
@@ -22,20 +20,14 @@ type activityarray = { [a in ACTIVETYPE] : Observable<IActivity[]> };
 @Injectable()
 export class ActServiceService {
   public $activityLists: activityarray= {Angel: null, DevProject: null, NonProfit: null, Investment: null, Class: null, Presentation: null};
-  // public $investments: Observable<InvestmentActivity[]>;
-  // public $classes: Observable<ClassActivity[]>;
 
   constructor(public db: AngularFireDatabase, public fbApp: FirebaseApp) {
 
-  //  this.$activityLists[ACTIVETYPE.Angel] = db.list(this.activepath(ACTIVETYPE.Angel),  { query: ref => ref.orderByChild('name') });
     allActivities.forEach( act => {
-      // this.$activityLists[act] = db.list<IActivity>(this.activepath(act), ref => ref.orderByChild('name')).valueChanges();
       this.$activityLists[act] = db.list<IActivity>(this.activepath(act), ref => ref.orderByChild('name'))
           .snapshotChanges().map(acts => (acts.map(a => ({key: a.key, ...a.payload.val()}))) );
 
     });
-   // this.$investments = db.list<InvestmentActivity>(this.activepath(ACTIVETYPE.Investment)).valueChanges();
-   // this.$classes = db.list<ClassActivity>(this.activepath(ACTIVETYPE.Class)).valueChanges();
 
    }
 
