@@ -22,17 +22,20 @@ type activityarray = { [a in ACTIVETYPE] : Observable<IActivity[]> };
 @Injectable()
 export class ActServiceService {
   public $activityLists: activityarray= {Angel: null, DevProject: null, NonProfit: null, Investment: null, Class: null, Presentation: null};
-  public $investments: Observable<InvestmentActivity[]>;
-  public $classes: Observable<ClassActivity[]>;
+  // public $investments: Observable<InvestmentActivity[]>;
+  // public $classes: Observable<ClassActivity[]>;
 
   constructor(public db: AngularFireDatabase, public fbApp: FirebaseApp) {
 
   //  this.$activityLists[ACTIVETYPE.Angel] = db.list(this.activepath(ACTIVETYPE.Angel),  { query: ref => ref.orderByChild('name') });
     allActivities.forEach( act => {
-      this.$activityLists[act] = db.list<IActivity>(this.activepath(act), ref => ref.orderByChild('name')).valueChanges();
+      // this.$activityLists[act] = db.list<IActivity>(this.activepath(act), ref => ref.orderByChild('name')).valueChanges();
+      this.$activityLists[act] = db.list<IActivity>(this.activepath(act), ref => ref.orderByChild('name'))
+          .snapshotChanges().map(acts => (acts.map(a => ({key: a.key, ...a.payload.val()}))) );
+
     });
-    this.$investments = db.list<InvestmentActivity>(this.activepath(ACTIVETYPE.Investment)).valueChanges();
-    this.$classes = db.list<ClassActivity>(this.activepath(ACTIVETYPE.Class)).valueChanges();
+   // this.$investments = db.list<InvestmentActivity>(this.activepath(ACTIVETYPE.Investment)).valueChanges();
+   // this.$classes = db.list<ClassActivity>(this.activepath(ACTIVETYPE.Class)).valueChanges();
 
    }
 
@@ -92,7 +95,7 @@ export class ActServiceService {
   public getActivefromName(active: ACTIVETYPE, name: string): Observable<IActivity> {
     if (active && name) {
       return (
-        this.db.list(this.activepath(active),  ref => ref.orderByChild('name').equalTo(name)).valueChanges()
+        this.db.list(this.activepath(active),  ref => ref.orderByChild('name').equalTo(name)).valueChanges().take(1)
           .switchMap(list => Observable.of(list[0]) as Observable<IActivity>)
       );
     } else {
@@ -101,7 +104,8 @@ export class ActServiceService {
   }
 
   public uploadImagefile(f: File): firebase.storage.UploadTask    {
-    const rootRef = this.fbApp.storage().ref();
+
+    const rootRef = firebase.storage(this.fbApp).ref();
     const filepath = '/images/' + f.name;
     const imageRef = rootRef.child(filepath);
     return(imageRef.put(f));
@@ -109,7 +113,7 @@ export class ActServiceService {
 
   public updateActivity(a: IActivity): Promise<void> {
     const actpath = this.activepath(a.activetype) + '/' + a.key;
-    delete a['$key'];
+    delete a['key'];
     const actobj = this.db.object(actpath);
     return(actobj.update(a));
   }

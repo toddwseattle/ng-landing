@@ -6,7 +6,7 @@
         <input #input id="mat-input-file" type="file" (change)="onChange($event)" (click)="onTouched($event)" (focusin)="onFocusToggle()"
           (focusout)="onFocusToggle()" [attr.multiple]="multiple? '' : null">
         <span class="mat-button filename" (click)="open()">{{fileNames}}</span>
-        <button mat-button type="button" mdSuffix (click)="open()" (focusin)="onFocusToggle()" (focusout)="onFocusToggle()"><mat-icon>image</mat-icon></button>
+        <button mat-button type="button" matSuffix (click)="open()" (focusin)="onFocusToggle()" (focusout)="onFocusToggle()"><mat-icon>image</mat-icon></button>
   
         <span class="mat-input-placeholder-wrapper">
           <label for="mat-input-file" class="mat-caption" [class.mat-empty]="false">{{placeholder}}

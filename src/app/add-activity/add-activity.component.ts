@@ -83,7 +83,7 @@ export class AddActivityComponent implements OnInit, OnDestroy {
         }
         });
         this.actsub = this.$currentActivity.subscribe(curact => {
-          if (curact && (curact.$key !== 'null')) {
+          if (curact && (curact.key !== 'null')) {
               this.patchgeneralForm(curact);
               if ((curact.image != null) && (curact.image.Url)) {
                 this.imagePlaceholder = curact.image.Url;
@@ -159,8 +159,8 @@ export class AddActivityComponent implements OnInit, OnDestroy {
   }
 
 updateEditfromCreatepromise(a: IActivity) {
-    if (a.$key) {
-      this.$currentActivity = this.as.getActivitybyKey(a.activetype, a.$key);
+    if (a.key) {
+      this.$currentActivity = this.as.getActivitybyKey(a.activetype, a.key);
     }
   }
 

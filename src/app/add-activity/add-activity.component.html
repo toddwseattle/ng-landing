@@ -8,21 +8,21 @@
     </div>
         <div  fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start" formGroupName="general">
             <mat-form-field fxFlex="20%">
-                <input type="date" formControlName="start" placeholder="Start" mdInput >
+                <input type="date" formControlName="start" placeholder="Start" matInput >
             </mat-form-field>
             <mat-checkbox formControlName="hasend" fxFlex="10%">End</mat-checkbox>
             <mat-form-field *ngIf="generalForm.controls['general'].value['hasend']" fxFlex="20%">
-                <input type="date" formControlName="end" placeholder="End" mdInput >
+                <input type="date" formControlName="end" placeholder="End" matInput >
             </mat-form-field>
             <mat-form-field fxFlex="55%">
-                <input type="text" formControlName="name" placeholder="Enter Name" mdInput >
+                <input type="text" formControlName="name" placeholder="Enter Name" matInput >
             </mat-form-field> 
-            <div fxFlex="40%" *ngIf="($currentActivity | async)?.image?.Url!=null">
-                <img [src]="($currentActivity | async).image.Url" [alt]="($currentActivity | async).image.altText">
+            <div fxFlex="40%" *ngIf="(($currentActivity | async)?.image!=null) && (($currentActivity | async)?.image.Url)">
+                <img [src]="($currentActivity | async)?.image.Url" [alt]="($currentActivity | async)?.image.altText">
             </div>
             <app-input-file formControlName="uploadfiles" class="input-container" placeholder="Image path" [valuePlaceholder]="imagePlaceholder" fxFlex="40%"></app-input-file>
             <mat-form-field fxFlex="100%">
-                <textarea mdInput placeholder="description" formControlName="description" ></textarea>
+                <textarea matInput placeholder="description" formControlName="description" ></textarea>
             </mat-form-field>
             <div  fxFlex="10%">
             <mat-checkbox formControlName="hidden">Hidden</mat-checkbox>
@@ -32,13 +32,13 @@
 <div formGroupName="investment" *ngIf="isInvestment(generalForm.value['activetype'])">
     <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start">
       <mat-form-field fxFlex="30%">
-        <input type="text" formControlName="companyLabel" placeholder="company name text" mdInput>
+        <input type="text" formControlName="companyLabel" placeholder="company name text" matInput>
       </mat-form-field>
       <mat-form-field fxFlex="60%">
-          <input type="text" formControlName="companyUrl" placeholder="company name url" mdInput>
+          <input type="text" formControlName="companyUrl" placeholder="company name url" matInput>
       </mat-form-field>
       <mat-form-field fxFlex="60%">
-          <input type="text" formControlName="crunchbaseUrl" placeholder="crunchbase company url" mdInput>
+          <input type="text" formControlName="crunchbaseUrl" placeholder="crunchbase company url" matInput>
       </mat-form-field>
       <div  fxFlex="20%">
         <mat-checkbox formControlName="divergent">Divergent Investment</mat-checkbox>
@@ -48,48 +48,48 @@
   <div formGroupName="class" *ngIf="isClass(generalForm.value['activetype'])">
       <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start">
           <mat-form-field fxFlex="30%">
-              <input type="text" formControlName="schoolLabel" placeholder="School Name" mdInput>
+              <input type="text" formControlName="schoolLabel" placeholder="School Name" matInput>
             </mat-form-field>
             <mat-form-field fxFlex="60%">
-                <input type="text" formControlName="schoolUrl" placeholder="School website url" mdInput>
+                <input type="text" formControlName="schoolUrl" placeholder="School website url" matInput>
             </mat-form-field> <mat-form-field fxFlex="30%">
-          <input type="text" formControlName="departmentLabel" placeholder="Department Name" mdInput>
+          <input type="text" formControlName="departmentLabel" placeholder="Department Name" matInput>
         </mat-form-field>
         <mat-form-field fxFlex="60%">
-            <input type="text" formControlName="departmentUrl" placeholder="Department page url" mdInput>
+            <input type="text" formControlName="departmentUrl" placeholder="Department page url" matInput>
         </mat-form-field>
         <mat-form-field fxFlex="60%">
-            <input type="text" formControlName="syllabusUrl" placeholder="Syllabus url" mdInput>
+            <input type="text" formControlName="syllabusUrl" placeholder="Syllabus url" matInput>
         </mat-form-field>
       </div>        
     </div>
     <div formGroupName="nonprofit" *ngIf="isNonprofit(generalForm.value['activetype'])">
         <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start">
             <mat-form-field fxFlex="30%">
-              <input type="text" formControlName="orgLabel" placeholder="organization name text" mdInput>
+              <input type="text" formControlName="orgLabel" placeholder="organization name text" matInput>
             </mat-form-field>
             <mat-form-field fxFlex="60%">
-                <input type="text" formControlName="orgUrl" placeholder="organization url" mdInput>
+                <input type="text" formControlName="orgUrl" placeholder="organization url" matInput>
             </mat-form-field>
         </div>          
     </div>
     <div formGroupName="devproject" *ngIf="isDevProject(generalForm.value['activetype'])">
         <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start">
             <mat-form-field fxFlex="30%">
-                <input type="text" formControlName="gitUrl" placeholder="git repository url" mdInput>
+                <input type="text" formControlName="gitUrl" placeholder="git repository url" matInput>
             </mat-form-field>
             <mat-form-field fxFlex="20%">
-                <input type="text" formControlName="projectLabel" placeholder="organization name text" mdInput>
+                <input type="text" formControlName="projectLabel" placeholder="organization name text" matInput>
               </mat-form-field>
               <mat-form-field fxFlex="40%">
-                  <input type="text" formControlName="projectUrl" placeholder="organization url" mdInput>
+                  <input type="text" formControlName="projectUrl" placeholder="organization url" matInput>
               </mat-form-field>
         </div>          
     </div>
     <div formGroupName="present" *ngIf="isPresent(generalForm.value['activetype'])">
         <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start start">
             <mat-form-field fxFlex="60%">
-                <input type="text" formControlName="presentUrl" placeholder="link to presentation" mdInput>
+                <input type="text" formControlName="presentUrl" placeholder="link to presentation" matInput>
             </mat-form-field>
         </div>          
     </div>

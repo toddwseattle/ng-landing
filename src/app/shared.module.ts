@@ -6,7 +6,7 @@ import { HttpModule } from '@angular/http';
 // material
 import { MatToolbarModule, MatInputModule, MatCheckboxModule, MatSidenavModule, MatCardModule,
     MatButtonModule, MatSelectModule, MatListModule, MatGridListModule, MatIconModule,
-    MatExpansionModule } from '@angular/material';
+    MatExpansionModule, MatTooltipModule } from '@angular/material';
   import { FlexLayoutModule } from '@angular/flex-layout';
 // angularfire
   import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -31,6 +31,7 @@ import { MatToolbarModule, MatInputModule, MatCheckboxModule, MatSidenavModule, 
         MatSelectModule,
         MatIconModule,
         MatExpansionModule,
+        MatTooltipModule,
         FlexLayoutModule,
      ],
     exports:  [CommonModule,
@@ -50,6 +51,7 @@ import { MatToolbarModule, MatInputModule, MatCheckboxModule, MatSidenavModule, 
         MatSelectModule,
         MatIconModule,
         MatExpansionModule,
+        MatTooltipModule,
         FlexLayoutModule,
         HttpModule
      ],

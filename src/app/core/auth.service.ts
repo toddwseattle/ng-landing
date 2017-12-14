@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 
@@ -18,7 +18,7 @@ export class AuthService {
     this.user$ = this.afAuth.authState
     .switchMap(user => {
     if (user) {
-      return this.afdb.object(`users/${user.uid}`) as Observable<IUser>;
+      return this.afdb.object(`users/${user.uid}`).valueChanges() as Observable<IUser>;
     } else {
       return Observable.of(null);
     }
@@ -38,7 +38,7 @@ export class AuthService {
 
   private updateUserData(user) {
     // Sets user data to firestore on login
-    const userRef: FirebaseObjectObservable<IUser> = this.afdb.object(`users/${user.uid}`);
+    const userRef: AngularFireObject<IUser> = this.afdb.object(`users/${user.uid}`);
     const data: IUser = {
       uid: user.uid,
       email: user.email,
