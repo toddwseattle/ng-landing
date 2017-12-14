@@ -106,7 +106,8 @@ export class ActServiceService {
   public uploadImagefile(f: File): firebase.storage.UploadTask    {
 
     const rootRef = firebase.storage(this.fbApp).ref();
-    const filepath = '/images/' + f.name;
+    const uniqprefix = Date.now().toString().slice(8, 13);
+    const filepath = '/images/' + uniqprefix + f.name ;
     const imageRef = rootRef.child(filepath);
     return(imageRef.put(f));
   }
