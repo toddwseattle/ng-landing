@@ -1,0 +1,24 @@
+.blue-back {
+    background-color: blue;
+}
+.yellow-back {
+    background-color: yellow;
+}
+.text-back {
+    background-color: rgb(117, 91, 91);
+    color: black;
+    border: 3px solid gray;
+}
+.profile-pic {
+    background-color: #37474f;
+    border: 3px solid gray;
+}
+.float-pic {
+    position: absolute;
+    top: 80px;
+    right: 0;
+    width: 200px;
+    height: 100px;
+    border: 3px solid #73AD21;
+    background-color: gray;
+}

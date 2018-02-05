@@ -18,6 +18,7 @@ import { ActivityGridComponent } from './activity-grid/activity-grid.component';
 
 import { LoginComponent } from './login/login.component';
 import { ActivityDetailComponent } from './activity-detail/activity-detail.component';
+import { BioComponent } from './bio/bio.component';
 
 
 
@@ -31,6 +32,7 @@ import { ActivityDetailComponent } from './activity-detail/activity-detail.compo
     ActivityGridComponent,
     LoginComponent,
     ActivityDetailComponent,
+    BioComponent,
   ],
   imports: [
     CoreModule,

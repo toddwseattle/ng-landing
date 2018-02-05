@@ -6,6 +6,7 @@ import { AddActivityComponent } from './add-activity/add-activity.component';
 import { ActivityDetailComponent } from './activity-detail/activity-detail.component';
 import { LoginComponent } from './login/login.component';
 import { AdminGuard } from './core/admin.guard';
+import { BioComponent } from './bio/bio.component';
 
 export const appRoutes: Routes = [
     {
@@ -24,6 +25,10 @@ export const appRoutes: Routes = [
         path: 'admin',
         loadChildren: 'app/admin/admin.module#AdminModule',
         canActivate: [AdminGuard]
+    },
+    {
+        path: 'bio',
+        component: BioComponent
     },
     {
         path: 'activity/:type/:name',

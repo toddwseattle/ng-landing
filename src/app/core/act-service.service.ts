@@ -3,12 +3,9 @@ import { Activity, IActivity, ACTIVETYPE, allActivities, InvestmentActivity, Cla
 import { divergentinvestments } from './activity-data';
 import { Observable } from 'rxjs/Observable';
 
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/reduce';
-import 'rxjs/add/operator/switchMap';
+import { map, reduce, switchMap, merge } from 'rxjs/operators';
 import 'rxjs/add/observable/zip';
 import 'rxjs/add/observable/empty';
-import 'rxjs/add/operator/merge';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/observable/concat';
 import * as firebase from 'firebase';
