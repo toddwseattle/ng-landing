@@ -21,6 +21,7 @@ export class GoogleTagsService {
       'event_label': gte.label,
       'value': gte.value
     });
+    console.log('Event Emitted %s %s', gte.category, gte.label);
   }
 
 }
