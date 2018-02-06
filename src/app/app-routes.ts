@@ -7,6 +7,8 @@ import { ActivityDetailComponent } from './activity-detail/activity-detail.compo
 import { LoginComponent } from './login/login.component';
 import { AdminGuard } from './core/admin.guard';
 import { BioComponent } from './bio/bio.component';
+import { DivergentComponent } from './divergent/divergent.component';
+import { ConsultingComponent } from './consulting/consulting.component';
 
 export const appRoutes: Routes = [
     {
@@ -29,6 +31,14 @@ export const appRoutes: Routes = [
     {
         path: 'bio',
         component: BioComponent
+    },
+    {
+        path: 'divergent',
+        component: DivergentComponent
+    },
+    {
+        path: 'consulting',
+        component: ConsultingComponent
     },
     {
         path: 'activity/:type/:name',

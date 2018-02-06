@@ -25,6 +25,8 @@ interface ICard {
 
 export class ActivityGridComponent implements OnInit, OnDestroy {
   @Input() activityType: ACTIVETYPE[];
+  @Input() current = false;
+  @Input() divergent = false;
   cols = 3;
   items: ICard[] = [];
   private acts$: Subscription;
@@ -45,6 +47,7 @@ export class ActivityGridComponent implements OnInit, OnDestroy {
   this.setmediachange();
   this.acts$ = this.as.getactivities(this.activityType).subscribe(acts => {
       acts.forEach(activity => {
+       if ((this.current && !(activity.dateEnd > 0)) || !this.current) {
        if (activity.activetype === ACTIVETYPE.Presentation) {
          const prezo = activity as PresentationActivity;
          this.items.push({header: prezo.name,
@@ -53,13 +56,28 @@ export class ActivityGridComponent implements OnInit, OnDestroy {
           footer: prezo.presentation.Url.toString(),
          act: activity.activetype });
        } else {
+        if (!this.divergent) {
         this.items.push({header: activity.name,
           body: activity.description,
           image: activity.image,
           footer: activity.organization.Url.toString(),
           act: activity.activetype
         });
+        } else {
+          if (activity.activetype === ACTIVETYPE.Investment) {
+            const invest = activity as InvestmentActivity;
+            if (invest.vehicle === 'Divergent') {
+              this.items.push({header: activity.name,
+                body: activity.description,
+                image: activity.image,
+                footer: activity.organization.Url.toString(),
+                act: activity.activetype
+              });
+            }
+          }
         }
+        }
+      }
       }); // forEach activity
 
     });
