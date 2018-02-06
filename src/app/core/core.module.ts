@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { ActServiceService } from './act-service.service';
 import { AuthGuard } from './auth.guard';
 import { AdminGuard } from './admin.guard';
+import { GoogleTagsService } from '../google-tags.service';
 
 @NgModule({
   imports: [
@@ -12,6 +13,6 @@ import { AdminGuard } from './admin.guard';
   declarations: [],
   exports: [
   ],
-  providers: [AuthService, AuthGuard, AdminGuard, ActServiceService ]
+  providers: [AuthService, AuthGuard, AdminGuard, ActServiceService, GoogleTagsService ]
 })
 export class CoreModule { }

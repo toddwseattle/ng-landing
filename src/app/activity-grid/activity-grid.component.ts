@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { IActivity, Activity, PresentationActivity, ACTIVETYPE, InvestmentActivity, IImage } from '../core/activity';
 import { ActServiceService } from '../core/act-service.service';
+import { GoogleTagsService } from '../google-tags.service';
 interface ICard {
     header: string;
     body: string;
@@ -31,7 +32,8 @@ export class ActivityGridComponent implements OnInit, OnDestroy {
   items: ICard[] = [];
   private acts$: Subscription;
   private media$: Subscription;
-  constructor(public el: ElementRef, public as: ActServiceService, public media: ObservableMedia, public route: Router) {
+  constructor(public el: ElementRef, public as: ActServiceService, public media: ObservableMedia,
+              public route: Router, private gts: GoogleTagsService) {
 
   }
 
@@ -45,6 +47,7 @@ export class ActivityGridComponent implements OnInit, OnDestroy {
   ngOnInit() {
   // refactor refactor to make ICard's an observable and use | async?
   this.setmediachange();
+  this.gts.EmitEvent({category: 'view_item_list', label: this.activityType.toString(), value: 1});
   this.acts$ = this.as.getactivities(this.activityType).subscribe(acts => {
       acts.forEach(activity => {
        if ((this.current && !(activity.dateEnd > 0)) || !this.current) {
@@ -88,6 +91,7 @@ export class ActivityGridComponent implements OnInit, OnDestroy {
   }
 
   showDetail(item: ICard) {
+    this.gts.EmitEvent({category: 'view_item', label: item.header, value: 1});
     this.route.navigateByUrl('activity/' + item.act + '/' + item.header);
   }
   ngOnDestroy() {
