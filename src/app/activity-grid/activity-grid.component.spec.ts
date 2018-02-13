@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { ActivityGridComponent } from './activity-grid.component';
-import { ActServiceService } from '../common/act-service.service';
+import { ActServiceService } from '../core/act-service.service';
 import { AngularFireDatabase } from 'angularfire2/database';
 
 import { AngularFireModule } from 'angularfire2';

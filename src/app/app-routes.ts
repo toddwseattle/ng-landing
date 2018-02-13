@@ -3,6 +3,13 @@ import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 import { EditActivityComponent } from './edit-activity/edit-activity.component';
 import { AddActivityComponent } from './add-activity/add-activity.component';
+import { ActivityDetailComponent } from './activity-detail/activity-detail.component';
+import { LoginComponent } from './login/login.component';
+import { AdminGuard } from './core/admin.guard';
+import { BioComponent } from './bio/bio.component';
+import { DivergentComponent } from './divergent/divergent.component';
+import { ConsultingComponent } from './consulting/consulting.component';
+
 export const appRoutes: Routes = [
     {
         path: 'home',
@@ -13,20 +20,29 @@ export const appRoutes: Routes = [
         component: AboutComponent
     },
     {
-        path: 'editactivity',
-        component: EditActivityComponent
+        path: 'login',
+        component: LoginComponent
     },
     {
-        path: 'activity/:type/:key',
-        component: AddActivityComponent
+        path: 'admin',
+        loadChildren: 'app/admin/admin.module#AdminModule',
+        canActivate: [AdminGuard]
     },
     {
-        path: 'activity/:type',
-        component: AddActivityComponent
+        path: 'bio',
+        component: BioComponent
     },
     {
-        path: 'activity',
-        component: AddActivityComponent
+        path: 'divergent',
+        component: DivergentComponent
+    },
+    {
+        path: 'consulting',
+        component: ConsultingComponent
+    },
+    {
+        path: 'activity/:type/:name',
+        component: ActivityDetailComponent
     },
     {
         path: '',

@@ -8,7 +8,8 @@ export enum ACTIVETYPE {Angel = 'Angel',
                         DevProject = 'DevProject',
                         Presentation = 'Presentation'
                     }
-export const allActivities = [ ACTIVETYPE.Angel, ACTIVETYPE.Class,
+// took out ACTIVETYPE.Angel as it's inactive
+export const allActivities = [  ACTIVETYPE.Class,
                          ACTIVETYPE.DevProject, ACTIVETYPE.Investment,
                           ACTIVETYPE.NonProfit, ACTIVETYPE.Presentation];
 

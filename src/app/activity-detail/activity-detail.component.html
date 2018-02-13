@@ -1,0 +1,12 @@
+<mat-card class="mat-typography">
+<mat-card-header><img [src]="($currentActivity|async)?.image.Url"  alt="Image"></mat-card-header>  
+<mat-card-title>{{($currentActivity | async)?.name}}</mat-card-title>
+<mat-card-subtitle>{{($currentActivity | async)?.activetype}}</mat-card-subtitle>
+<mat-card-content>
+  <ul>
+    <li>{{($currentActivity | async)?.description}}</li>
+    <li>Visit:
+      <a [href]="($currentActivity | async)?.organization.Url">{{($currentActivity | async)?.organization.label}} </a> </li>
+  </ul>
+</mat-card-content>  
+</mat-card>

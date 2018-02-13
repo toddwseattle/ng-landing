@@ -6,9 +6,9 @@ import { ACTIVETYPE, allActivities, IActivity,
          AngelActivity, ClassActivity, DevProjectActivity,
          InvestmentActivity, NonProfitActivity, PresentationActivity,
          IImage, ILink, IActivityGeneralProps, getTypefromString
-         } from '../common/activity';
-import { ActServiceService } from '../common/act-service.service';
-import { FirebaseObjectObservable } from 'angularfire2/database';
+         } from '../core/activity';
+import { ActServiceService } from '../core/act-service.service';
+import { AngularFireObject } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/of';
@@ -83,7 +83,7 @@ export class AddActivityComponent implements OnInit, OnDestroy {
         }
         });
         this.actsub = this.$currentActivity.subscribe(curact => {
-          if (curact && (curact.$key !== 'null')) {
+          if (curact && (curact.key !== 'null')) {
               this.patchgeneralForm(curact);
               if ((curact.image != null) && (curact.image.Url)) {
                 this.imagePlaceholder = curact.image.Url;
@@ -155,26 +155,26 @@ export class AddActivityComponent implements OnInit, OnDestroy {
         console.log('error');
       break;
     }
-    this.router.navigate(['editactivity']);
+    this.router.navigate(['admin']);
   }
 
 updateEditfromCreatepromise(a: IActivity) {
-    if (a.$key) {
-      this.$currentActivity = this.as.getActivitybyKey(a.activetype, a.$key);
+    if (a.key) {
+      this.$currentActivity = this.as.getActivitybyKey(a.activetype, a.key);
     }
   }
 
 updateOrCreate(a: IActivity) {
   if (!this.editmode) {
-    this.as.createActivity(a).then(av => this.updateEditfromCreatepromise(av))
-    .catch(e => {
-      console.log('activity creatin error %s', e.message);
-    });
+    this.as.createActivity(a).then(av => this.updateEditfromCreatepromise(av),
+        (e => {
+          console.log('activity creatin error %s', e.message);
+        }));
   } else {
     a.key = this.currentact.key;
    // a.$key = this.currentact.$key;
   //  a.$ref = this.currentact.$ref;
-    this.as.updateActivity(a).then(av => this.updateEditfromCreatepromise(av))
+    this.as.updateActivity(a).then(__ => this.updateEditfromCreatepromise(a))
     .catch(e => {
       console.log('activity update error %s: %s', e.name, e.message);
     });
@@ -194,7 +194,6 @@ updateOrCreate(a: IActivity) {
 uploadImageAndCreateOrSaveActivity(a: IActivity, v: IAddActivity): void {
     if (v.general.uploadfiles && (v.general.uploadfiles.length > 0)) {
       this.as.uploadImagefile(v.general.uploadfiles[0]).then(snap => {
-        console.log(snap);
         a.image.Url = snap.downloadURL;
         a.image.altText = v.general.uploadfiles[0].name;
         this.updateOrCreate(a);

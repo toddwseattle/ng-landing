@@ -1,11 +1,24 @@
-<md-card>
-  <md-card-header><div class="todd-thumbnail" md-card-avatar></div>
-  <md-card-title>Todd Warren</md-card-title>
-  <md-card-subtitle>Venture Capitalist, Technologist, Entrepreneurship Educator</md-card-subtitle>
-  </md-card-header>
-<md-card-content></md-card-content>
-  Todd is a managing director at <a href="http://www.divergentvc.com">Divergent Ventures</a> .   He teaches software entrpereneurship
+<mat-card>
+  <mat-card-header><div class="todd-thumbnail" mat-card-avatar></div>
+  <mat-card-title>Todd Warren</mat-card-title>
+  <mat-card-subtitle>Venture Capitalist, Technologist, Entrepreneurship Educator</mat-card-subtitle>
+  </mat-card-header>
+<mat-card-content>
+  <p>Todd is a managing director at <a href="http://www.divergentvc.com">Divergent Ventures</a> .   He teaches software entrpereneurship
   at <a href="http://www.northwestern.edu">Northwestern University</a> in the <a href="http://www.farley.northwestern.edu/index.html">Farley Center</a> via a course 
-  called <a href="http://www.farley.northwestern.edu/we-teach/nuvention/web-and-media.html">NUvention Web</a>
-</md-card>
-<app-activity-grid></app-activity-grid>
+  called <a href="http://www.farley.northwestern.edu/we-teach/nuvention/web-and-media.html">NUvention Web</a></p>
+  <p>Todd teaches classes, makes investments as an angel and through Divergent, and is involved in several non-profits. 
+    He works on some dev projects for fun and to support his classes.  You can also see particular presentations he has given by clicking the appropriate headings below.</p>
+</mat-card-content>
+</mat-card>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let act of curact">
+    <mat-expansion-panel-header class="header-area mat-typography">
+        <h1 *ngIf="act!=activeclass">{{act}}s</h1>
+        <h1 *ngIf="act==activeclass">{{act}}es</h1>
+      </mat-expansion-panel-header>
+    <div class="content-area">
+      <app-activity-grid [activityType]="[act]"></app-activity-grid>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

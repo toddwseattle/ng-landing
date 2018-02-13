@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ActServiceService } from '../common/act-service.service';
+import { ActServiceService } from '../core/act-service.service';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireDatabaseMock } from '../common/activity-data-fb-mock';
+import { AngularFireDatabaseMock } from '../core/activity-data-fb-mock';
 import { MdListModule } from '@angular/material';
 
 import { EditActivityComponent } from './edit-activity.component';

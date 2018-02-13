@@ -1,14 +1,16 @@
- <md-grid-list cols="{{cols}}">
+ <mat-grid-list [cols]=cols rowHeight="300px">
    
-   <md-grid-tile *ngFor="let item of items">
-     <div class="container" style="background-image:url('assets/images/tempo-small.svg'),no-repeat; background-size:100%">
+   <mat-grid-tile *ngFor="let item of items" (click)="showDetail(item)" >
+     <div class="container">
       <article class="caption">
       <div class="caption__overlay">
         <h1 class="caption__overlay__title">{{item.header}} </h1>
-          <div class="mat-body-2 caption__overlay__content" [innerHTML]="item.body"></div>
+        <div class="caption caption__overlay__content" [innerHTML]="item.body"></div>
       </div>
-      <img [src]="item.image.Url" [alt]="item.header" class="caption_media">
+      <div>
+      <img [src]="item.image.Url" width=300 [alt]="item.header" class="caption_media">
+      </div>
     </article> 
     </div>
-    </md-grid-tile>
- </md-grid-list>
+    </mat-grid-tile>
+ </mat-grid-list>

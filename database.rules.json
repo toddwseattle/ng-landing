@@ -1,0 +1,21 @@
+{
+  "rules": {
+    ".read": "true",
+    ".write": "(root.child('users').child(auth.uid).child('admin').val() === true)",
+    "class": {
+      ".indexOn": "name"
+    },
+    "devproject": {
+      ".indexOn": "name"
+    },
+    "investments": {
+      ".indexOn": "name"
+    },
+    "nonprofit": {
+      ".indexOn": "name"
+    },
+    "presentation": {
+      ".indexOn": "name"
+    }
+  }
+}

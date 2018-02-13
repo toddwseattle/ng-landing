@@ -1,5 +1,5 @@
-import { AngularFireDatabase,  FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
-import { PathReference, FirebaseListFactoryOpts } from 'angularfire2/database/interfaces';
+import { AngularFireDatabase,  AngularFireList, AngularFireObject } from 'angularfire2/database';
+import { PathReference } from 'angularfire2/database/interfaces';
 import { divergentinvestments } from './activity-data';
 import { Activity, ACTIVETYPE } from './activity';
 import { Observable } from 'rxjs/Observable';
@@ -10,10 +10,10 @@ export const investmentsobs = (observer: any) => {
 
 export const AngularFireDatabaseMock = {
     // list(pathOrRef: PathReference, opts?: FirebaseListFactoryOpts): FirebaseListObservable<any[]>;
-    list : function(pathOrRef: PathReference, opts?: FirebaseListFactoryOpts): FirebaseListObservable<any[]> {
+    list : function(pathOrRef: PathReference): Observable<any[]> {
         switch (pathOrRef) {
             case '/investments':
-                return(Observable.create(investmentsobs) as FirebaseListObservable<Activity[]>);
+                return(Observable.create(investmentsobs) as Observable<Activity[]>);
             default:
                 break;
         }

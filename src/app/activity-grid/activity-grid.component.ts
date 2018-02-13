@@ -1,11 +1,18 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
-import { IActivity, Activity, InvestmentActivity, IImage } from '../common/activity';
-import { ActServiceService } from '../common/act-service.service';
+import { Component, OnInit, ElementRef, OnDestroy, Input } from '@angular/core';
+import { MediaChange, ObservableMedia } from '@angular/flex-layout';
+import { Router } from '@angular/router';
+
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { IActivity, Activity, PresentationActivity, ACTIVETYPE, InvestmentActivity, IImage } from '../core/activity';
+import { ActServiceService } from '../core/act-service.service';
+import { GoogleTagsService } from '../google-tags.service';
 interface ICard {
     header: string;
     body: string;
     image: IImage ;
     footer: string;
+    act: ACTIVETYPE;
   }
 
 
@@ -17,31 +24,79 @@ interface ICard {
   styleUrls: ['./activity-grid.component.css']
 })
 
-export class ActivityGridComponent implements OnInit {
+export class ActivityGridComponent implements OnInit, OnDestroy {
+  @Input() activityType: ACTIVETYPE[];
+  @Input() current = false;
+  @Input() divergent = false;
   cols = 3;
-  items: ICard[]= [];
+  items: ICard[] = [];
+  private acts$: Subscription;
+  private media$: Subscription;
+  constructor(public el: ElementRef, public as: ActServiceService, public media: ObservableMedia,
+              public route: Router, private gts: GoogleTagsService) {
 
-  constructor(public el: ElementRef, public as: ActServiceService) {
-    this.as.getactivities().subscribe(acts => {
-      acts.forEach(activity => {
-       this.items.push({header: activity.name,
-                        body: activity.description,
-                        image: activity.image,
-                        footer: activity.organization.Url.toString()});
-      }); // forEach activity
+  }
+
+  private setmediachange() {
+    const COLUMNS = { 'xs': 1, 'sm': 2, 'md': 3, 'lg': 4, 'xl': 4 };
+    this.media$ = this.media.subscribe((change: MediaChange) => {
+      this.cols = COLUMNS[change.mqAlias];
     });
   }
 
   ngOnInit() {
-    this.cols = this.sizeCols(this.el.nativeElement.offsetWdith);
+  // refactor refactor to make ICard's an observable and use | async?
+  this.setmediachange();
+  this.gts.EmitEvent({category: 'view_item_list', label: this.activityType.toString(), value: 1});
+  this.acts$ = this.as.getactivities(this.activityType).subscribe(acts => {
+      acts.forEach(activity => {
+       if ((this.current && !(activity.dateEnd > 0)) || !this.current) {
+       if (activity.activetype === ACTIVETYPE.Presentation) {
+         const prezo = activity as PresentationActivity;
+         this.items.push({header: prezo.name,
+          body: prezo.description,
+          image: prezo.image,
+          footer: prezo.presentation.Url.toString(),
+         act: activity.activetype });
+       } else {
+        if (!this.divergent) {
+        this.items.push({header: activity.name,
+          body: activity.description,
+          image: activity.image,
+          footer: activity.organization.Url.toString(),
+          act: activity.activetype
+        });
+        } else {
+          if (activity.activetype === ACTIVETYPE.Investment) {
+            const invest = activity as InvestmentActivity;
+            if (invest.vehicle === 'Divergent') {
+              this.items.push({header: activity.name,
+                body: activity.description,
+                image: activity.image,
+                footer: activity.organization.Url.toString(),
+                act: activity.activetype
+              });
+            }
+          }
+        }
+        }
+      }
+      }); // forEach activity
+
+    });
+   // this.cols = this.sizeCols(this.el.nativeElement.offsetWdith);
   }
   sizeCols(width) {
     return( Math.floor(width / 300) >= 1 ? Math.floor(width / 300) : 1);
   }
-  onResize(event) {
-    const element = event.target.innerWidth;
-    console.log(element);
-    this.cols = this.sizeCols(element);
+
+  showDetail(item: ICard) {
+    this.gts.EmitEvent({category: 'view_item', label: item.header, value: 1});
+    this.route.navigateByUrl('activity/' + item.act + '/' + item.header);
+  }
+  ngOnDestroy() {
+    this.acts$.unsubscribe();
+    this.media$.unsubscribe();
   }
 
 }
