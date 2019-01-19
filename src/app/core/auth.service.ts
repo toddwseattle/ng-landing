@@ -1,28 +1,33 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import * as firebase from 'firebase/app';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/switchMap';
+import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
+import * as firebase from "firebase/app";
+import { AngularFireAuth } from "angularfire2/auth";
+import { AngularFireDatabase, AngularFireObject } from "angularfire2/database";
+import { Observable, of } from "rxjs";
 
-import { IUser } from './user';
+import { IUser } from "./user";
+import { switchMap } from "rxjs/operators";
 
 @Injectable()
 export class AuthService {
   user$: Observable<IUser>;
-  constructor(private afAuth: AngularFireAuth,
+  constructor(
+    private afAuth: AngularFireAuth,
     private afdb: AngularFireDatabase,
-    private router: Router) {
+    private router: Router
+  ) {
     //// Get auth data, then get firestore user document || null
-    this.user$ = this.afAuth.authState
-    .switchMap(user => {
-    if (user) {
-      return this.afdb.object(`users/${user.uid}`).valueChanges() as Observable<IUser>;
-    } else {
-      return Observable.of(null);
-    }
-    });
+    this.user$ = this.afAuth.authState.pipe(
+      switchMap(user => {
+        if (user) {
+          return this.afdb
+            .object(`users/${user.uid}`)
+            .valueChanges() as Observable<IUser>;
+        } else {
+          return of(null);
+        }
+      })
+    );
   }
 
   googleLogin() {
@@ -30,15 +35,16 @@ export class AuthService {
     return this.oAuthLogin(provider);
   }
   private oAuthLogin(provider) {
-    return this.afAuth.auth.signInWithPopup(provider)
-      .then((credential) => {
-        this.updateUserData(credential.user);
-      });
+    return this.afAuth.auth.signInWithPopup(provider).then(credential => {
+      this.updateUserData(credential.user);
+    });
   }
 
   private updateUserData(user) {
     // Sets user data to firestore on login
-    const userRef: AngularFireObject<IUser> = this.afdb.object(`users/${user.uid}`);
+    const userRef: AngularFireObject<IUser> = this.afdb.object(
+      `users/${user.uid}`
+    );
     const data: IUser = {
       uid: user.uid,
       email: user.email,
@@ -51,7 +57,7 @@ export class AuthService {
 
   signOut() {
     this.afAuth.auth.signOut().then(() => {
-        this.router.navigate(['/']);
+      this.router.navigate(["/"]);
     });
   }
 }

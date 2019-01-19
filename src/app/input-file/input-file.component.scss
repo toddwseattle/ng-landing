@@ -39,29 +39,29 @@ input {
     width: calc(100% - 25px - #{$paddingLeft});
 }
 
-.mat-input-underline {
+.mat-form-field-underline {
     top: 67%;
 }
 
-.mat-input-wrapper {
+.mat-form-field-wrapper {
     padding: 0;
 }
 
-.custom-focused .mat-input-placeholder {
+.custom-focused .mat-form-field-label {
     color: $focusColor;
 }
-.custom-focused .mat-input-underline {
+.custom-focused .mat-form-field-underline {
     background-color: $focusColor;
 }
 
 // angular material override (WEIRD NECESSITY)
 
-.mat-input-wrapper {
+.mat-form-field-wrapper {
     position: relative;
     height: 57px;
 }
 
-.mat-input-infix {
+.mat-form-field-infix {
     display: block;
     position: relative;
     flex: auto;
@@ -75,7 +75,7 @@ input {
     vertical-align: bottom;
 }
 
-.mat-input-placeholder-wrapper {
+.mat-form-field-labelwrapper {
     position: absolute;
     left: 0;
     box-sizing: content-box;
@@ -85,11 +85,11 @@ input {
     pointer-events: none;
 }
 
-.mat-input-placeholder.mat-float:not(.mat-empty) {
+.mat-form-field-label.mat-float:not(.mat-empty) {
     display: block;
 }
 
-.mat-input-placeholder {
+.mat-form-field-label {
     position: absolute;
     left: 0;
     font: inherit;
@@ -105,13 +105,13 @@ input {
     display: none;
 }
 
-.mat-input-underline {
+.mat-form-field-underline {
     position: absolute;
     height: 1px;
     width: 100%;
 }
 
-.mat-input-underline .mat-input-ripple {
+.mat-form-field-underline .mat-form-field-ripple {
     position: absolute;
     height: 2px;
     top: 0;
@@ -123,7 +123,7 @@ input {
     transition: background-color .3s cubic-bezier(.55,0,.55,.2);
 }
 
-.mat-input-flex {
+.mat-form-field-flex {
     display: inline-flex;
     align-items: baseline;
     width: 100%;
