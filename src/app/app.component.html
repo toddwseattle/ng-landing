@@ -1,22 +1,28 @@
 <div fxFlexLayout="column">
-
   <mat-toolbar color="primary">
-   <button mat-button  (click)="sidenav.opened=!sidenav.opened;"><span class="mat-display-1">toddwseattle</span></button>
+    <button
+      mat-button
+      matTooltip="View Social Media and Contact Info"
+      matTooltipPosition="below"
+      (click)="sidenav.opened = !sidenav.opened"
+    >
+      <span class="mat-display-1">toddwseattle</span>
+    </button>
     <div class="toolbar-button">
-    <a mat-button routerLink="/">Overview</a>
-    <a mat-button routerLink="/divergent">Divergent</a>
-    <a mat-button routerLink="/consulting">Consulting</a>
-    <a mat-button routerLink="/bio">Bio</a>
-    <a mat-button routerLink="/about">About</a>
+      <a mat-button routerLink="/">Overview</a>
+      <a mat-button routerLink="/divergent">Divergent</a>
+      <a mat-button routerLink="/consulting">Consulting</a>
+      <a mat-button routerLink="/bio">Bio</a>
+      <a mat-button href="https://blog.toddwseattle.com">Blog</a>
+      <a mat-button routerLink="/about">About</a>
     </div>
   </mat-toolbar>
   <mat-sidenav-container>
     <mat-sidenav #sidenav mode="side" opened="false">
-     <app-social-nets></app-social-nets>
-  
+      <app-social-nets></app-social-nets>
     </mat-sidenav>
-    <div fxLayout="column" class="content-area" >
-     <router-outlet fxFlex></router-outlet>
+    <div fxLayout="column" class="content-area">
+      <router-outlet fxFlex></router-outlet>
     </div>
- </mat-sidenav-container>
+  </mat-sidenav-container>
 </div>

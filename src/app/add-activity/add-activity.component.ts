@@ -21,7 +21,6 @@ import { ActServiceService } from "../core/act-service.service";
 import { AngularFireObject } from "angularfire2/database";
 import { Observable, of, Subscription } from "rxjs";
 import { switchMap } from "rxjs/operators";
-import * as firebase from "firebase";
 
 // interface to mimic shape of the form
 interface IAddActivity {

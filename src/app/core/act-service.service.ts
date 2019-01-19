@@ -11,7 +11,8 @@ import { divergentinvestments } from "./activity-data";
 import { Observable, zip, of, empty } from "rxjs";
 import { map, switchMap, take } from "rxjs/operators";
 
-import * as firebase from "firebase";
+import * as firebase from "firebase/app";
+import "firebase/storage";
 
 import {
   AngularFireDatabase,
