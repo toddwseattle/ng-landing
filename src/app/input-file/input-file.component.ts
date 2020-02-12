@@ -1,18 +1,26 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  ElementRef,
+  forwardRef
+} from "@angular/core";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 @Component({
-  selector: 'app-input-file',
-  templateUrl: './input-file.component.html',
-  styleUrls: ['./input-file.component.scss'],
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => InputFileComponent),
-    multi: true
-  }]
+  selector: "app-input-file",
+  templateUrl: "./input-file.component.html",
+  styleUrls: ["./input-file.component.scss"],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputFileComponent),
+      multi: true
+    }
+  ]
 })
 export class InputFileComponent implements OnInit, ControlValueAccessor {
-
   @Input() disabled: boolean;
   @Input() placeholder: string;
   @Input() valuePlaceholder: string;
@@ -23,16 +31,16 @@ export class InputFileComponent implements OnInit, ControlValueAccessor {
 
   private _files: File[];
 
-  @ViewChild('input') rawInput: ElementRef;
+  @ViewChild("input", { static: false }) rawInput: ElementRef;
 
   /**
    * https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/
    * https://blog.thoughtram.io/angular/2016/07/27/custom-form-controls-in-angular-2.html
    */
-  constructor() { }
+  constructor() {}
 
-  private _propagateChange = (_: any) => { };
-  private _propagateTouched = (_: any) => { };
+  private _propagateChange = (_: any) => {};
+  private _propagateTouched = (_: any) => {};
 
   writeValue(obj: any): void {
     this.files = obj;
@@ -100,11 +108,10 @@ export class InputFileComponent implements OnInit, ControlValueAccessor {
   }
 
   private _initFileNames() {
-    let str = [this.valuePlaceholder || 'Aucun fichier sélectionné'];
+    let str = [this.valuePlaceholder || "Aucun fichier sélectionné"];
     if (this.hasFiles) {
       str = this.files.map(f => f.name);
     }
-    this.fileNames = str.join(', ');
+    this.fileNames = str.join(", ");
   }
-
 }
